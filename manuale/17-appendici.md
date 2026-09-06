@@ -172,8 +172,8 @@ Selvaggia · Simona · Tancia · Tita · Tommasa · Vaggia · Verdiana
 Nome, patronimico, avonimico, casato:
 
 > **Lorenzo di Piero di Cosimo de' Medici**
-> **Alessandra di Filippo Macinghi negli Strozzi** *(una donna maritata porta il
-> proprio casato e quello del marito)*
+> **Alessandra di Filippo Macinghi negli Strozzi**
+> *(la donna maritata porta il proprio casato e quello del marito)*
 > **Monna Lucrezia, donna di Bernardo Rucellai**
 
 Nel gioco si usi sempre la forma piena la prima volta che un personaggio compare

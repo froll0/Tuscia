@@ -25,6 +25,12 @@ Lo scopo dichiarato del gioco è rendere la propria famiglia la **prima di tutta
 la Tuscia**: la più ricca, la più temuta, la più imparentata, la più onorata.
 Lo scopo reale, come nella storia che il gioco imita, è di durare.
 
+**Il manuale si legge anche come pagina unica navigabile:**
+[claude.ai/code/artifact/6784afee-b925-41a9-8795-e8603b3c6da7](https://claude.ai/code/artifact/6784afee-b925-41a9-8795-e8603b3c6da7)
+— indice laterale, tavole consultabili durante la partita, e il congegno della
+Prova per tirare i due dadi contro un Contrasto. Si rigenera con
+`python3 sito/build.py` (vedi [`sito/`](sito/)).
+
 ---
 
 ## Struttura del manuale
