@@ -1,6 +1,7 @@
 # 07 — TERRE E RENDITE
 
 > *«Chi ha terra ha guerra; ma chi non ha terra non ha nulla.»*
+> — proverbio contadino toscano
 
 La terra rende poco e rende sempre. È il fondamento del casato: dà pane nelle
 carestie, uomini nelle guerre, credito nei banchi e — quando è terra con
@@ -89,7 +90,7 @@ Misura l'obbedienza e l'affetto dei sudditi e dei coloni.
 | 9–10 | Vi amano; si difenderebbero da sé; +25% di rendita |
 | 7–8 | Contenti; +10% |
 | 5–6 | Ordinario; rendita piena |
-| 3–4 | Malcontenti; −15%; le notizie di casa vostra escono di là |
+| 3–4 | Malcontenti; −15%; le notizie della casa padronale trapelano di là |
 | 1–2 | Ostili; −35%; i coloni frodano; i banditi trovano ricetto |
 | 0 | **Ribellione**: la Terra si sottrae; non rende nulla; occorre riprenderla con la forza o con la grazia |
 
@@ -131,6 +132,27 @@ poveri, guadagna **Onore +2 e Seguito +1**; chi lo incetta per rivenderlo caro
 guadagna denaro e **Onore −2, Sospetto +2**, e il popolo se ne ricorda per
 vent'anni.
 
+### Esempio di computo della rendita
+
+> I Bencivenni possiedono la villa di Pontassieve, che la tavola valuta 140
+> fiorini di rendita base, e vi hanno costruito un **mulino** (+35). La Fedeltà
+> è a **7**, perché il padrone vi si è recato di persona due anni di seguito e
+> ha sgravato i coloni nell'annata scarsa.
+>
+> **Rendita base più migliorie**: 140 + 35 = **175 fl**.
+> **Fedeltà 7**: la tavola del § 4 dà **+10%** → 175 × 1,10 = **192 fl**.
+> **Raccolto dell'anno**: l'Arbitro tira 2d6 per il Valdarno e ottiene **5**,
+> annata scarsa, **× 0,8** → 192 × 0,8 = **154 fl**.
+>
+> I Bencivenni incassano dunque **154 fiorini** da quella terra, in autunno,
+> anziché i 175 che la scheda promette. La differenza — ventun fiorini — è
+> quanto è costata loro un'annata mediocre; se la Fedeltà fosse stata a 3, ne
+> avrebbero incassati 119.
+
+**L'ordine delle operazioni è sempre questo**: prima si somma la rendita base e
+le migliorie; poi si applica la Fedeltà; poi il raccolto; da ultimo il guasto,
+se vi è stato.
+
 ## 6. Le Migliorie
 
 Si costruiscono con l'azione *Migliorare una terra*. Il tempo indicato è il
@@ -145,7 +167,7 @@ tempo prima che la miglioria cominci a rendere.
 | Fornace da calce o da mattoni | 250 | 1 anno | +20 | Sconto del 20% sulle fabbriche proprie |
 | Impianto di vigna | 200 | 4 anni | +30 | |
 | Impianto d'oliveto | 250 | 8 anni | +35 | Rendita perpetua e sicura |
-| Colombaia e peschiere | 120 | 1 anno | +10 | Onore +1 (si fa bella figura a tavola) |
+| Colombaia e peschiere | 120 | 1 anno | +10 | Onore +1 (la mensa signorile ne acquista decoro) |
 | Bonifica di palude | 1.000 | 5 anni | +80 | Fedeltà +1; salubrità |
 | Ponte | 500 | 2 anni | +25 di pedaggio | Onore +1; Fedeltà +1 |
 | Fonte pubblica o lavatoio | 200 | 1 anno | — | Fedeltà +2 |

@@ -111,49 +111,179 @@ un proprio Difetto a proprio danno.
 
 ## 6. Del combattere di persona
 
-Il gioco non è di battaglie personali, e la sua meccanica di combattimento è
-volutamente breve e pericolosa. Nella Toscana del tempo un uomo colpito bene di
-spada moriva, e un gentiluomo che si azzuffava per strada perdeva più onore di
-quanto ne guadagnasse.
+Questo paragrafo governa gli scontri fra poche persone: un duello, un agguato in
+un chiasso, la difesa di una porta, una rissa di famigli. Gli scontri fra
+eserciti si risolvono altrimenti, e sono materia del fascicolo 12.
 
-**Corpo** = 3 + Vigore (da 4 a 8).
+Il sistema è volutamente breve e pericoloso. Nella Toscana del tempo un uomo
+colpito di punta moriva, e un gentiluomo che venisse alle mani per via perdeva
+più onore di quanto ne acquistasse.
 
-### Ordine
-Si tira 1d6 + Destrezza; agisce prima chi ha di più. Chi assale di sorpresa
-agisce comunque per primo e con +2.
+### 6.1 I tre valori che occorrono
 
-### Colpo
-È una **Contesa**:
+| Valore | Come si ottiene | Che cosa significa |
+|---|---|---|
+| **Corpo** | 3 + Vigore (dunque da 4 a 8) | Quante Ferite il personaggio sopporta prima di cadere |
+| **Danno dell'arme** | dalla tavola in 6.4 | Quanto l'arme aggiunge al colpo |
+| **Riparo dell'armatura** | dalla tavola in 6.4 | Quanto l'armatura sottrae al colpo |
 
-> Assalitore: 2d6 + Destrezza + Armi
-> Difensore: 2d6 + Destrezza + Armi (+1 con targa o rotella)
+Le Ferite si segnano sulla scheda annerendo le caselle del Corpo. Non si
+guariscono da sé nel corso dello scontro.
 
-Chi vince ferisce. **Ferite inflitte = 1 + (scarto ÷ 3, arrotondato in giù) +
-danno dell'arme − riparo dell'armatura** (minimo 0; se 0, il colpo ha soltanto
-scomposto l'avversario, che subisce −1 al prossimo tiro).
+### 6.2 L'ordine in cui si agisce
+
+Ciascun contendente tira **1d6 + Destrezza**. Agisce per primo chi ottiene il
+totale maggiore; a parità, agisce per primo chi ha Destrezza maggiore; se anche
+questa è pari, si tira di nuovo.
+
+Chi assale di sorpresa — perché l'altro non lo ha veduto, perché era travestito,
+perché l'agguato è riuscito — **agisce per primo in ogni caso** e conduce il
+primo scambio con **+2**.
+
+L'ordine, stabilito una volta, resta il medesimo per tutto lo scontro.
+
+### 6.3 Lo scambio, passo per passo
+
+Ogni scambio rappresenta pochi secondi: due o tre colpi, una parata, un passo
+indietro. Si procede in quattro passi.
+
+**Passo primo — si tira.** È una Contesa. Entrambi tirano nel medesimo momento:
+
+> **Chi assale**: 2d6 + Destrezza + Armi + modificatori
+> **Chi si difende**: 2d6 + Destrezza + Armi + modificatori
+
+**Passo secondo — si guarda chi ha vinto.**
+
+- Vince chi ha il totale maggiore. Egli è colui che ha colpito.
+- **A parità nessuno colpisce**: le lame si sono incontrate, i due si sono
+  scostati, e si passa allo scambio seguente.
+
+**Passo terzo — si legge il grado del colpo.** Si sottrae il totale minore dal
+maggiore. La differenza si chiama **margine**, e si legge in questa tavola:
+
+| Margine | Grado del colpo | Vale |
+|---|---|---|
+| 1–2 | **Colpo di striscio** | 0 |
+| 3–5 | **Colpo pieno** | 1 |
+| 6 o più | **Colpo grave** | 2 |
+
+**Passo quarto — si contano le Ferite.** Una sola somma:
+
+> **FERITE = grado del colpo + danno dell'arme − riparo dell'armatura**
+> *(mai meno di zero)*
+
+Se il risultato è **zero**, il colpo non è passato: l'arme ha trovato la maglia
+o la piastra. Chi lo ha ricevuto è però **scomposto**, e subisce **−1** al solo
+scambio seguente.
+
+### 6.4 Armi e armature
 
 | Arme | Danno | | Armatura | Riparo |
 |---|---|---|---|---|
-| Pugni, bastone | 0 | | Nessuna | 0 |
-| Pugnale, stiletto | 1 | | Giaco di maglia sotto la veste | 1 |
-| Spada, spiedo | 2 | | Corsaletto | 2 |
-| Spadone, lancia, azza | 3 | | Armatura da uomo d'arme | 3 |
+| Pugni, calci | 0 | | Nessuna: veste e farsetto | 0 |
+| Bastone, sasso, sgabello | 1 | | Giaco di maglia sotto la veste | 1 |
+| Pugnale, stiletto | 1 | | Corsaletto, celata | 2 |
+| Spada, spiedo, roncola | 2 | | Armatura completa da uomo d'arme | 3 |
+| Spadone, lancia, azza, partigiana | 3 | | | |
 | Balestra | 3 | | | |
-| Archibugio (dal 1490 ca.) | 4, ma si ricarica in 3 tempi | | | |
+| Archibugio *(dal 1490 circa)* | 4 | | | |
 
-### Ferite
-| Corpo residuo | Stato |
+**Ricarica**: la balestra si ricarica in **un** scambio, l'archibugio in
+**tre**. Chi ricarica non si difende: contro di lui ogni colpo vale come se il
+margine fosse di un grado superiore.
+
+**Colpire alle giunture.** Contro un avversario in armatura si può cercare
+l'ascella, l'inguine, la visiera — ciò che i maestri d'arme chiamavano il ferire
+di punta a mezza spada. Si dichiara prima di tirare: si subisce **−3** alla
+Contesa, e in cambio il Riparo dell'avversario si riduce di **2**.
+
+### 6.5 Modificatori dello scambio
+
+| Circostanza | Modificatore |
 |---|---|
-| Metà o più | Si combatte senza penalità |
-| Meno di metà | −1 a ogni azione; si perde sangue |
-| 0 | A terra, fuori di combattimento. Si tira 2d6 + Vigore: 10 o più, ferito grave e si salverà; 7–9, storpiato per sempre in un membro; 6 o meno, muore entro poco se non soccorso da medico entro un'ora |
+| Arte Armi a 0 (non si è mai imparato) | −2 |
+| Terreno rotto, buio, scala, barca | −1 |
+| Combattere a cavallo contro chi è a piedi | +2 |
+| Targa, rotella o brocchiere | +1 alla difesa |
+| Posizione serrata: porta, scala, corridoio (un solo avversario alla volta) | +2 alla difesa |
+| Per ogni avversario oltre il primo che assalga la medesima persona | −1 a chi si difende (fino a −3) |
+| Ferite pari o superiori alla metà del Corpo | −1 |
+| Chi ricarica, chi è legato, chi è disarmato | −3 |
 
-**Riscatto**: chi cade in mano nemica e ha nome noto vale più vivo che morto.
-Vedasi il fascicolo 12 per le taglie.
+### 6.6 Vincere senza ferire
 
-**Guarigione**: una ferita grave richiede una Prova estesa di 4 Passi, un Passo
-per settimana, con Vigore + assistenza di medico. In caso di Fallimento si
-sopravviene la cancrena: nuova prova o morte.
+Chi vince lo scambio può **rinunciare alle Ferite** e ottenere in loro vece uno
+dei seguenti esiti. È la scelta ordinaria quando si vuole un prigioniero da
+riscattare, e va dichiarata subito dopo aver letto il margine.
+
+| Esito | Margine richiesto |
+|---|---|
+| Scostare l'avversario e disimpegnarsi | 1 |
+| Disarmarlo | 3 |
+| Atterrarlo (si rialza spendendo uno scambio) | 3 |
+| Sospingerlo dove si vuole: fuori della porta, verso il fiume, contro il muro | 3 |
+| Afferrarlo e tenerlo | 6 |
+| Costringerlo alla resa (se ha già Ferite pari alla metà del Corpo) | 6 |
+
+### 6.7 Il ferito
+
+| Ferite subite | Stato |
+|---|---|
+| Meno della metà del Corpo | Si combatte senza penalità |
+| Metà del Corpo o più | **−1** a ogni azione; si perde sangue |
+| Pari al Corpo | **A terra**, fuori di combattimento (si veda oltre) |
+
+**Chi cade a terra** tira subito **2d6 + Vigore**:
+
+| Totale | Sorte |
+|---|---|
+| 10 o più | Ferito grave, ma si salverà |
+| 7–9 | Storpiato per sempre in un membro: **−1** permanente a Vigore o a Destrezza, a scelta dell'Arbitro secondo dove fu colpito |
+| 6 o meno | Muore entro l'ora, se non lo soccorre un medico o un cerusico |
+
+Un Punto di Fortuna speso non evita la caduta; **tre** Punti di Fortuna la
+convertono in Scampo (§ 5): si esce vivi, ma nelle condizioni che l'Arbitro
+stabilisce.
+
+**Prigionia e riscatto.** Chi cade in mano nemica e porta nome noto vale assai
+più vivo che morto. Le taglie sono nel fascicolo 12 § 6.
+
+**Guarigione.** Una ferita grave si risana con una Prova estesa di **4 Passi**,
+un Passo per settimana: si tira **2d6 + Vigore + Medicina di chi lo assiste**
+contro Contrasto **10**. Al Fallimento sopravviene la cancrena: si ripete la
+prova la settimana seguente con **−3**; un secondo Fallimento è mortale, salvo
+amputazione, che salva la vita e toglie un membro.
+
+### 6.8 Esempio di scambio
+
+> Bernardo de' Lapucci (Destrezza 3, Armi 2, Vigore 3, dunque Corpo 6) è assalito
+> in un chiasso da un bravo (Destrezza 2, Armi 3, Corpo 6). Bernardo porta spada
+> e, sotto la veste, un giaco di maglia; il bravo ha spada e corsaletto.
+>
+> **Ordine.** Bernardo tira 1d6 e ottiene 4: totale 7. Il bravo ottiene 5:
+> totale 7. Parità; Bernardo ha Destrezza maggiore e agisce per primo.
+>
+> **Primo scambio.** Bernardo tira 2d6 e ottiene 8: totale 8 + 3 + 2 = **13**.
+> Il bravo ottiene 6: totale 6 + 2 + 3 = **11**. Bernardo vince di **2**: colpo
+> di striscio, che vale 0. Ferite = 0 + 2 (spada) − 2 (corsaletto) = **0**. Il
+> colpo non passa; il bravo è scomposto e subirà −1 nello scambio seguente.
+>
+> **Secondo scambio.** Il bravo tira 9: totale 9 + 2 + 3 − 1 = **13**. Bernardo
+> tira 5: totale 5 + 3 + 2 = **10**. Il bravo vince di **3**: colpo pieno, che
+> vale 1. Ferite = 1 + 2 (spada) − 1 (giaco) = **2**. Bernardo segna due Ferite
+> su sei.
+>
+> **Terzo scambio.** Bernardo dichiara di ferire alle giunture, sotto l'ascella
+> del corsaletto: −3 alla Contesa, ma il Riparo del bravo scende a 0. Tira 10:
+> totale 10 + 3 + 2 − 3 = **12**. Il bravo tira 4: totale 4 + 2 + 3 = **9**.
+> Bernardo vince di **3**: colpo pieno, che vale 1. Ferite = 1 + 2 − 0 = **3**.
+> Il bravo ha tre Ferite su sei: è alla metà del Corpo, e da ora subisce −1.
+>
+> **Quarto scambio.** Bernardo vince di 7: colpo grave, che vale 2. Ferite =
+> 2 + 2 − 2 = 2. Il bravo giunge a cinque Ferite. Bernardo potrebbe finirlo; ma
+> il bravo sa chi lo ha mandato, e Bernardo preferisce l'esito senza ferite:
+> avendo vinto di 7, e avendo l'avversario Ferite oltre la metà del Corpo, lo
+> **costringe alla resa** e lo consegna agli Otto di Guardia.
 
 ## 7. Del persuadere e del costringere
 

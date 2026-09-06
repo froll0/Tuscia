@@ -47,12 +47,35 @@ campagna).
 **Tenuta** 6 + Animo · **Guardia** 6 + Ingegno + Informazione + misure ·
 **Corpo** 3 + Vigore
 
-## COMBATTIMENTO
-Ordine: 1d6 + Destrezza. Colpo: Contesa di Destrezza + Armi.
-**Ferite = 1 + (scarto ÷ 3) + danno d'arme − riparo d'armatura.**
-Danni: pugnale 1 · spada 2 · spadone/lancia/balestra 3 · archibugio 4.
-Ripari: giaco 1 · corsaletto 2 · armatura 3.
-A Corpo 0: 2d6 + Vigore → 10+ ferito grave · 7–9 storpiato · 6− muore.
+## COMBATTIMENTO DI PERSONA
+**Corpo** = 3 + Vigore. **Ordine**: 1d6 + Destrezza (sorpresa: primo e +2).
+
+**Lo scambio** — Contesa: 2d6 + Destrezza + Armi per ciascuno.
+A parità nessuno colpisce. Chi vince legge il **margine** (differenza fra i due
+totali):
+
+| Margine | Grado del colpo | Vale |
+|---|---|---|
+| 1–2 | Colpo di striscio | 0 |
+| 3–5 | Colpo pieno | 1 |
+| 6 o più | Colpo grave | 2 |
+
+> **FERITE = grado del colpo + danno dell'arme − riparo dell'armatura**
+> (mai meno di zero; se zero, l'avversario è scomposto: −1 allo scambio seguente)
+
+**Danno**: pugni 0 · bastone e pugnale 1 · spada 2 · spadone, lancia e balestra 3
+· archibugio 4.
+**Riparo**: nessuna 0 · giaco 1 · corsaletto 2 · armatura completa 3.
+**Alle giunture**: −3 alla Contesa, il Riparo avversario scende di 2.
+**Ricarica**: balestra 1 scambio, archibugio 3; chi ricarica subisce colpi di un
+grado superiore.
+
+**In luogo delle Ferite** (dichiarandolo subito): disimpegnarsi con margine 1 ·
+disarmare, atterrare o sospingere con 3 · afferrare o costringere alla resa con 6.
+
+**Ferite pari a metà del Corpo**: −1 a ogni azione. **Pari al Corpo**: a terra,
+si tira 2d6 + Vigore → 10+ ferito grave · 7–9 storpiato per sempre · 6− muore
+entro l'ora senza medico.
 
 ## LA STAGIONE
 **I Nuove · II Consiglio · III Scene · IV Armi · V Banco · VI Casa**

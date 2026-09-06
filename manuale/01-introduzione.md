@@ -69,6 +69,111 @@ città, i principi forestieri, il Papa, il raccolto e la peste. Dichiara gli
 avvenimenti, applica le tavole, custodisce i segreti delle trame e decide i
 contrasti dubbi. Il fascicolo 16 gli è dedicato.
 
+## Le convenzioni di scrittura
+
+Il manuale adopera dovunque le medesime abbreviazioni. Si leggano una volta.
+
+| Scrittura | Significato |
+|---|---|
+| **2d6** | Si tirano due dadi a sei facce e si sommano i risultati (da 2 a 12) |
+| **1d6** | Si tira un solo dado a sei facce |
+| **d20**, **d100** | Un dado a venti facce; un dado a cento facce (due dadi a dieci facce, dei quali uno conta le decine) |
+| **C 11** | «Contrasto 11»: il numero che la Prova deve raggiungere o superare |
+| **+2**, **−3** | Modificatori: si aggiungono o si tolgono al totale del tiro |
+| **fl** | Fiorini d'oro. È la moneta in cui il gioco tiene ogni conto |
+| **(0–10)** | L'intervallo entro cui un punteggio può variare |
+| **fasc. 09** | Rimando al fascicolo nono di questo manuale |
+| **§ 4** | Rimando al paragrafo quarto del fascicolo in cui si sta leggendo |
+| *corsivo* | Termine tecnico dell'epoca, oppure titolo di un'opera |
+| **grassetto** | Termine del gioco che ha una regola propria |
+
+Quando una regola dice «si tira» senza altro, si intende **2d6**. Quando dice
+«a scelta dell'Arbitro», significa che non vi è tavola: decide una persona.
+Ogni divisione si arrotonda **per difetto**, salvo dove sia scritto altrimenti.
+
+---
+
+## Il lessico del gioco
+
+Il manuale usa due specie di parole, e conviene non confonderle.
+
+Le **parole del gioco** designano congegni inventati per questo manuale: la
+Prova, i Passi, il Seguito. Non esistevano nel Quattrocento e non si troveranno
+in alcun documento.
+
+Le **parole della storia** designano istituti realmente esistiti — lo
+squittinio, la tratta, la Balìa, la mezzadria — che il gioco adopera come regole
+perché funzionavano già come regole. Il glossario completo, con tutti i termini
+storici, è nel fascicolo 17 § G.
+
+### Le parole del gioco
+
+| Termine | Significato | Dove |
+|---|---|---|
+| **Arbitro** | Il partecipante che non ha casato: regge il mondo, le case non giocanti e i segreti | fasc. 16 |
+| **Casato** | La famiglia che un partecipante governa: il vero personaggio del gioco | fasc. 03 |
+| **Congiunto** | Il personaggio di famiglia che un partecipante interpreta | fasc. 04 |
+| **Faccendiere** | Il secondo personaggio: agente prezzolato di un casato, di regola non il proprio | fasc. 04 |
+| **Qualità** | I cinque valori naturali di una persona: Vigore, Destrezza, Ingegno, Animo, Grazia (da 1 a 5) | fasc. 04 |
+| **Arte** | Una competenza appresa: Computo, Comando, Legge, Veleni… (da 0 a 5) | fasc. 04 |
+| **Prova** | Il tiro fondamentale: 2d6 + Qualità + Arte + modificatori | fasc. 05 |
+| **Contrasto** | La difficoltà che la Prova deve raggiungere (da 6 a 16) | fasc. 05 |
+| **Contesa** | Prova contro Prova, quando due volontà si oppongono | fasc. 05 |
+| **Margine** | La differenza fra i due totali di una Contesa | fasc. 05 |
+| **Prova estesa** | Impresa lunga che si compie accumulando **Passi**, uno o due per volta | fasc. 05 |
+| **Fortuna** | Tre punti per personaggio, spendibili per correggere la sorte | fasc. 05 |
+| **Stagione** | L'unità di tempo del gioco: quattro per anno, una per seduta | fasc. 06 |
+| **Azione di Casato** | Ciò che un uomo della casa può intraprendere in una stagione | fasc. 06 |
+| **Uomo di Casa idoneo** | Chi può eseguire un'Azione. Il loro numero è il numero delle Azioni | fasc. 03 § 8 |
+| **Sostanze** | L'insieme dei beni e dei crediti del casato | fasc. 03 |
+| **Patrimonio** | Il denaro contante e i crediti esigibili, in fiorini | fasc. 03 |
+| **Rendita** | Quanto il casato incassa in un anno da terre, botteghe, banco e uffici | fasc. 03 |
+| **Tenore** | Il modo in cui la casa vive: quanto spende per apparire | fasc. 06 § V |
+| **Seguito** | La clientela politica in una città (da 0 a 10) | fasc. 09 |
+| **Onore** | La stima pubblica del casato (da 0 a 10) | fasc. 14 |
+| **Sospetto** | Ciò che della casa si mormora (da 0 a 10) | fasc. 14 |
+| **Magnificenza** | La spesa fatta perché si veda, e che resta (da 0 a 10) | fasc. 14 |
+| **Fedeltà** | L'obbedienza dei sudditi di una Terra (da 0 a 10) | fasc. 07 |
+| **Tenuta** | Quanto una persona resiste a lusinghe e minacce: 6 + Animo | fasc. 04 |
+| **Guardia** | Quanto un casato resiste alle trame: 6 + Ingegno + Informazione + misure | fasc. 13 |
+| **Corpo** | Quante Ferite si sopportano prima di cadere: 3 + Vigore | fasc. 05 § 6 |
+| **Trama** | Impresa segreta, che avanza per Passi e si scopre per Sospetto | fasc. 13 |
+| **Preminenza** | Il punteggio finale che decide quale casa sia la prima | fasc. 15 |
+| **Fine Particolare** | L'obiettivo segreto del singolo partecipante | fasc. 15 § 2 |
+
+### Le parole della storia usate come regole
+
+| Termine | Che cosa era | Dove |
+|---|---|---|
+| **Squittinio** | Lo scrutinio con cui si stabiliva chi fosse eleggibile agli uffici | fasc. 09 § 2 |
+| **Polizza** | Il cartiglio col nome di un eleggibile, riposto nella borsa | fasc. 09 § 2 |
+| **Borsa** | Il sacchetto di cuoio da cui si estraevano i nomi degli ufficiali | fasc. 09 § 2 |
+| **Tratta** | L'estrazione a sorte con cui si assegnavano gli uffici | fasc. 09 § 2 |
+| **Divieto** | La regola che impediva a una famiglia di ripetere subito un ufficio | fasc. 09 § 2 |
+| **Specchio** | Il registro dei debitori del Comune: chi vi era iscritto perdeva l'eleggibilità | fasc. 08 § 6 |
+| **Balìa** | Commissione straordinaria investita di pieni poteri | fasc. 09 § 6 |
+| **Parlamento** | L'adunanza del popolo in piazza, con cui si conferiva la Balìa | fasc. 09 § 6 |
+| **Prestanza** | Prestito forzoso imposto ai cittadini | fasc. 08 § 6 |
+| **Monte Comune** | Il debito pubblico consolidato, i cui crediti si compravano e vendevano | fasc. 08 § 6 |
+| **Monte delle doti** | Fondo pubblico nel quale si depositava per costituire la dote di una figlia | fasc. 08 § 7 |
+| **Mezzadria** | Il contratto agrario a metà del prodotto, forma ordinaria del contado | fasc. 07 § 1 |
+| **Condotta** | Il contratto con cui uno Stato assoldava un capitano e la sua compagnia | fasc. 12 § 3 |
+| **Guasto** | La devastazione sistematica del contado nemico | fasc. 07 § 7 |
+| **Tamburagione** | La denunzia anonima deposta nelle cassette dei magistrati | fasc. 13 § 7 |
+| **Parentado** | L'alleanza fra due case stretta con un matrimonio | fasc. 10 § 2 |
+| **Ricordanze** | Il libro di memorie che ogni famiglia teneva | fasc. 01, in fondo |
+
+### Come leggere questo manuale la prima volta
+
+Chi voglia arrivare presto al tavolo legga, in quest'ordine: il presente
+fascicolo; il **fascicolo 05** (il sistema); il **fascicolo 18**, che mostra una
+stagione intera giocata dal principio alla fine; e il **fascicolo 02 § 6**, la
+cronologia ragionata. Il resto si consulta quando occorre.
+
+L'Arbitro legga inoltre il fascicolo 16 per intero prima della seduta zero.
+
+---
+
 ## Come si misura il tempo
 
 - Una **seduta** di gioco corrisponde di regola a una **stagione**.

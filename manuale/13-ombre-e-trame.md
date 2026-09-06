@@ -1,6 +1,7 @@
 # 13 — OMBRE E TRAME
 
 > *«Gli uomini offendono o per paura o per odio.»*
+> — Niccolò Machiavelli
 
 Questo fascicolo governa ciò che si fa di nascosto. Le azioni qui descritte si
 dichiarano **per iscritto e in segreto all'Arbitro** nella Fase del Consiglio, e
@@ -107,6 +108,38 @@ Una trama scoperta si può **abbandonare** (nessun altro effetto) o
 **proseguire** con Guardia del bersaglio **+3** e Soglia già superata: ogni
 ulteriore Fallimento produce una prova pubblica.
 
+### Esempio di trama condotta a termine
+
+> **Bersaglio**: Guido de' Malavolti, capo di casa.
+> **Obiettivo**: **Rovinare** — 5 Passi, soglia di Sospetto 5.
+> **Metodo**: **Via di denaro** (Ingegno + Cambio) — nessun Passo aggiunto,
+> soglia **+1** dunque **6**, spesa variabile.
+> **Esecutore**: ser Goro, Ingegno 3 + Cambio 1 = 4.
+> **Guardia dei Malavolti**: 11.
+>
+> Il disegno: comprare sottomano le cambiali che i Malavolti hanno firmato a
+> tre banchi diversi, e presentarle tutte insieme allo stesso giorno.
+>
+> | Stagione | Tiro | Totale | Esito | Passi | Sospetto |
+> |---|---|---|---|---|---|
+> | Primavera | 9 | 13 | Successo | 1 | 0 |
+> | Estate | 4 | 8 | Fallimento | 1 | 1 |
+> | Autunno | 11 | 15 | Successo | 2 | 1 |
+> | Inverno | 12 | 16 | **Successo pieno** | 4 | 1 |
+> | Primavera | 6 | 10 | Esito dubbio (C−1) | 5 | 2 |
+>
+> Al quinto Passo la trama si compie. L'Arbitro la narra: i tre banchi
+> presentano le cambiali il medesimo martedì; Guido non ha il contante; per
+> pagare vende due poderi sotto prezzo e resta debitore del Comune. Va **a
+> specchio**, e con esso perde l'eleggibilità agli uffici per sé e per i figli.
+>
+> Il Sospetto della trama non ha mai raggiunto la soglia di 6: nessuno sa che
+> vi sia stata una trama. Si dirà che i Malavolti erano cattivi amministratori.
+>
+> **Nota bene**: l'Esito dubbio dell'ultima stagione ha dato un Passo *e* un
+> punto di Sospetto. Se le stagioni fossero state due di più, la trama sarebbe
+> stata scoperta prima di compiersi.
+
 ## 4. Le conseguenze della scoperta
 
 Quando è provato chi ha tramato:
@@ -140,7 +173,7 @@ Compiuta la congiura, si tira **2d6 + Seguito del casato congiurato**, Contrasto
 |---|---|
 | Successo | Il popolo accetta il fatto compiuto; si convoca il Parlamento e si prende la Balìa (fasc. 09) |
 | Esito dubbio | La città è in tumulto per una stagione; il potere resta indeciso; chiunque può prenderlo |
-| Fallimento | **Il popolo insorge contro i congiurati.** Chi ha ucciso il tiranno è fatto a pezzi in piazza dalla folla che credeva di liberare |
+| Fallimento | **Il popolo insorge contro i congiurati.** Chi ha ucciso il tiranno è ucciso in piazza dalla moltitudine che intendeva liberare |
 
 Il **Fallimento** è ciò che accadde ai Pazzi nel 1478: la congiura riuscì a metà,
 la città non li seguì, e in tre giorni la loro casa fu cancellata.
@@ -218,7 +251,7 @@ Tracollo**, la riferisce e ne fa scrittura davanti a notaio.
 **Regola per il tavolo**: quando il bersaglio è il faccendiere di un altro
 partecipante, non si tira. Si tratta a voce, fra i due partecipanti, e chi regge
 il faccendiere decide liberamente — segnando poi in segreto la nuova Fedeltà. Il
-gioco è tutto qui.
+gioco consiste in ciò.
 
 ## 9. Delle contro-trame
 

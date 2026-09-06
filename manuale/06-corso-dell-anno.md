@@ -136,8 +136,8 @@ e i modificatori si assegnino secondo come la scena è andata. Chi ha detto la
 cosa giusta al momento giusto merita un +2 quanto chi ha speso duecento fiorini.
 
 I personaggi di partecipanti diversi si incontrino il più possibile. Il
-faccendiere di uno che tratta col congiunto di un altro è il cuore di questo
-gioco.
+faccendiere di un partecipante che tratti col congiunto di un altro costituisce
+il congegno essenziale di questo gioco.
 
 ---
 

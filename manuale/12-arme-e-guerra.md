@@ -46,12 +46,33 @@ Le forze si contano per **corpi**, non per teste. Ciascun corpo ha **Forza**
 | **Balestrieri e schioppettieri** | 100 | 3 | 3 | 250 fl | Lo schioppo dal 1470 circa; l'archibugio dal 1490 |
 | **Provvisionati** (fanteria di presidio) | 100 | 3 | 5 | 300 fl | Ferma; ottimi in difesa, immobili in campo |
 | **Milizia d'ordinanza** (dal 1506) | 300 | 3 | 2 | 90 fl | Costa quasi nulla; fugge |
-| **Fanti oltramontani** (Svizzeri, Lanzichenecchi) — dal 1494 | 300 | 7 | 6 | 900 fl | Terribili. Se la paga tarda anche un giorno, ammutinano |
+| **Fanti oltramontani** (Svizzeri, Lanzichenecchi) — dal 1494 | 300 | 7 | 6 | 900 fl | Di efficacia straordinaria. Se la paga tarda anche di un giorno, si ammutinano |
 | **Fanteria spagnola** (rodeleros e archibugieri) — dal 1503 | 250 | 6 | 6 | 700 fl | |
 | **Artiglieria da campo** (4 falconetti e sagri) | — | 2 | 1 | 200 fl | Acquisto 900 fl |
 | **Artiglieria da muro** (2 bombarde o cannoni) | — | 0 | 1 | 400 fl | Acquisto 2.400 fl. Solo per assedi |
 | **Guastatori** | 200 | 0 | 1 | 60 fl | Scavano, aprono strade, guastano il contado |
 | **Bravi di casa** | 10 | 1 | 3 | 60 fl | Violenza privata; non stanno in campo |
+
+### Il mantenimento delle Armi di casa
+
+Il grado d'**Armi** acquistato alla creazione (fasc. 03 § 4) non è gratuito: si
+paga ogni stagione, in pace come in guerra, e la spesa entra nel bilancio della
+Fase del Banco.
+
+| Grado d'Armi | Che cosa comprende | Spesa a stagione |
+|---|---|---|
+| 1 | Quattro famigli armati di spada e giaco | 25 fl |
+| 2 | Dieci bravi sotto un caporale | 60 fl |
+| 3 | Venticinque bravi, un caporale di nome, una casa difendibile | 150 fl |
+| 4 | Brigata di cinquanta, o venti lance | 400 fl |
+| 5 | Condotta in essere di cento lance | 3.000 fl |
+
+Il grado 5 non si mantiene con la borsa del casato: lo paga il conducente
+(§ 3). Chi lo tenga a proprie spese si rovina in due anni, ed è esattamente ciò
+che accadde a chi tentò di farlo.
+
+Chi non paga il mantenimento per una stagione abbassa il grado di 1: gli uomini
+se ne vanno a servire altrove, e lo raccontano.
 
 **Prestanza.** Chi assolda deve anticipare una paga intera al momento del
 contratto. Chi non l'anticipa non trova soldati.
@@ -195,7 +216,7 @@ rotta può, dall'assalto successivo, sostenerne un'altra dando **+3**.
 
 **Se dopo cinque assalti nessun esercito è rotto**, la giornata si chiude senza
 vincitori: entrambi si ritirano al campo, contano i feriti e scrivono a casa
-d'aver vinto. Accadde spessissimo.
+d'aver vinto. Il caso ricorse con grande frequenza.
 
 ### Il capitano in persona
 Un capitano può gettarsi nella mischia per aggiungere **+2** a un assalto. Se lo
@@ -270,7 +291,7 @@ Ogni **mese** l'assediante sceglie una via e tira.
 | **Blocco** | Provvedere, C 9 | Le Vettovaglie della piazza calano di 2 invece di 1 |
 | **Batteria** | Fortificare, C 10, richiede artiglieria da muro | **Mura −1** (**−2** se la maniera è vecchia e siamo dopo il 1494; **0** contro la maniera moderna con meno di due corpi d'artiglieria) |
 | **Mina** | Fortificare, C 12 | Mura −2 al Successo; al Fallimento, la contromina del difensore uccide i guastatori |
-| **Pratica** | *(trama segreta: fasc. 13)* | Si compra un uomo di dentro. Al compimento, una porta si apre di notte |
+| **Pratica** | *(trama segreta: fasc. 13)* | Si corrompe un uomo del presidio. Al compimento, una porta si apre di notte |
 | **Assalto** | vedasi sotto | Si tenta la presa |
 
 ### Le vie del difensore
@@ -305,8 +326,8 @@ castellano tratta. Le condizioni ordinarie:
 
 **Il soccorso.** Una piazza che sappia d'essere soccorsa resiste: **Fedeltà +2** e
 **+2** a tutte le prove del difensore, per il mese in cui il soccorso è atteso.
-La guerra d'assedio è, in sostanza, una gara fra la fame di dentro e l'esercito
-di fuori.
+La guerra d'assedio consiste, in sostanza, in una contesa fra la fame degli
+assediati e la marcia dell'esercito soccorritore.
 
 ---
 

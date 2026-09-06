@@ -93,7 +93,8 @@ filiale (fasc. 08) ne trae:
 - la vendita degli **uffici venali** di Curia, che si comprano come rendite
   perpetue;
 - l'informazione: a Roma si sa tutto d'Italia con quindici giorni d'anticipo.
-  Un faccendiere con Rete *Fuori di Toscana* 3 a Roma vale un esercito.
+  Un faccendiere con Rete *Fuori di Toscana* 3 a Roma ha valore pari a quello di
+  un esercito.
 
 ## 5. Le armi spirituali
 

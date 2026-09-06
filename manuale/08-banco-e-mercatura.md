@@ -1,6 +1,7 @@
 # 08 — BANCO E MERCATURA
 
 > *«Chi vuol far bene i fatti suoi, tenga la penna in mano.»*
+> — massima dei mercanti fiorentini
 
 Il denaro è la materia del gioco. La terra dà sicurezza; il traffico e il cambio
 danno le somme con cui si comprano uffici, doti, condotte e cardinali.
@@ -37,7 +38,7 @@ nell'Arte e — nelle Arti Maggiori — apre la via agli uffici del Comune.
 | Bottega | Fondo necessario | Utile annuo ordinario | Rischio |
 |---|---|---|---|
 | **Bottega di Lana** (lanaiolo) | 1.500 | 120–200 | Medio: dipende dalla lana forestiera e dai panni invenduti |
-| **Bottega di Seta** (setaiolo) | 2.500 | 200–350 | Alto: materia carissima, moda mutevole |
+| **Bottega di Seta** (setaiolo) | 2.500 | 200–350 | Alto: materia prima di prezzo assai elevato, gusto mutevole |
 | **Tintoria** | 800 | 80–120 | Medio: dipende dall'allume |
 | **Banco di cambio minuto** | 1.000 | 90–150 | Medio |
 | **Speziale, orafo, legnaiolo** | 400 | 40–70 | Basso |
@@ -187,7 +188,7 @@ vendono liberamente.
 **Speculazione sul Monte** (azione di Denaro, Prova di Ingegno + Computo, C 11):
 comprare crediti a 22 in tempo di guerra e venderli a 35 in tempo di pace
 triplica il denaro. Chi siede fra gli **Ufficiali del Monte** sa prima degli
-altri quando si sospenderanno le paghe: è informazione che vale una fortuna, ed è
+altri quando si sospenderanno le paghe: è notizia di valore considerevole, ed è
 esattamente il genere di cosa per cui si tengono faccendieri.
 
 **Le prestanze contro di voi.** Il Comune vi impone prestanze secondo l'estimo.
@@ -242,4 +243,4 @@ scritto di entrate e uscite. Chi non lo tiene, e non sa dire quanto ha, subisce
 
 Le scritture sono anche il punto debole della casa: chi ruba il libro segreto di
 un banco ne conosce i debitori, i depositanti, le partite occulte e le usure
-mascherate. Vale più di un esercito.
+mascherate. Ha valore superiore a quello di un esercito.

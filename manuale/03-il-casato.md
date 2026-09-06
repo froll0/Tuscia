@@ -65,7 +65,7 @@ guadagnati con le Macchie (§ 6). Si spendano secondo la tavola.
 
 | Grado | Costo | Valore | Descrizione |
 |---|---|---|---|
-| 0 | — | 100 fl | Si vive alla giornata; si vendono le gioie della moglie |
+| 0 | — | 100 fl | Si provvede di giorno in giorno; si alienano i gioielli della consorte |
 | 1 | 3 PC | 500 fl | Sufficienza stretta |
 | 2 | 6 PC | 1.500 fl | Agiatezza ordinaria di casa cittadina |
 | 3 | 9 PC | 4.000 fl | Casa ragguardevole |

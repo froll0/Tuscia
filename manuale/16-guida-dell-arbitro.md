@@ -28,7 +28,7 @@ congiura del Poggio, con Piero de' Medici malato, il reggimento incerto e le
 borse da rifare. È la situazione più fertile di tutta la storia toscana per
 questo gioco.
 
-Alternative eccellenti: **Siena 1480**, dove i Monti si mangiano fra loro;
+Alternative eccellenti: **Siena 1480**, dove i Monti si escludono a vicenda dal reggimento;
 **Pistoia 1499**, dove Panciatichi e Cancellieri hanno fatto della città un
 campo di battaglia; **Lucca 1430**, alla caduta di Paolo Guinigi.
 
@@ -106,7 +106,7 @@ Una seduta ben condotta contiene:
   un assalto);
 - **una scena di casa** (una nascita, una morte, una lite fra fratelli, una figlia
   che rifiuta lo sposo);
-- **la contabilità**, fatta in fretta e con precisione.
+- **la contabilità**, sbrigata con rapidità e con esattezza.
 
 Se una stagione non produce almeno un cambiamento di stato — un ufficio, una
 morte, un matrimonio, un tradimento, una terra che passa di mano — è una stagione
@@ -129,7 +129,8 @@ sprecata. Fatene accadere uno.
    fatelo scoprire alla persona sbagliata.
 5. **Ricompensate chi gioca il proprio personaggio contro il proprio interesse.**
    Il faccendiere che tradisce il proprio patrono per la propria Ambizione, e ne
-   paga il prezzo, è il cuore di questo gioco: gli si dia un Punto di Fortuna.
+   paga il prezzo, produce l'esito migliore che questo gioco consenta: gli si
+   conceda un Punto di Fortuna.
 
 ## 7. Delle case dei partecipanti che vanno troppo bene o troppo male
 

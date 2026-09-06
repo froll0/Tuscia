@@ -125,7 +125,7 @@ drammatiche:
 
 | Epoca | Chiusura consigliata |
 |---|---|
-| Il tempo della bilancia | **1494**, alla calata di Carlo VIII: il mondo che avete costruito finisce in un mese |
+| Il tempo della bilancia | **1494**, alla calata di Carlo VIII: l'ordine costruito nel corso della campagna si dissolve nel giro di poche settimane |
 | Il tempo delle calate | **1512**, al sacco di Prato e al ritorno dei Medici |
 | Il tempo dell'ultima libertà | **agosto 1530**, alla capitolazione di Firenze |
 

@@ -63,9 +63,9 @@ sospettissima insieme — anzi, le case che contano lo sono quasi tutte.
 | Sospetto | Che cosa se ne dice |
 |---|---|
 | 0–1 | Gente quieta |
-| 2–3 | «Sanno il fatto loro» |
-| 4–5 | «Con quelli bisogna guardarsi» |
-| 6–7 | «Chi li tocca non campa» |
+| 2–3 | Case avvedute, di cui si dice che sanno amministrare i propri interessi |
+| 4–5 | Case delle quali si raccomanda di diffidare |
+| 6–7 | Case che si ritengono capaci di far male a chi le contrasti |
 | 8–9 | Se muore qualcuno in città, si nomina voi |
 | 10 | La città vi teme e cerca l'occasione di liberarsene |
 
@@ -110,11 +110,16 @@ altro cui pensare, non perché vi creda innocenti.
 
 ## 3. La Magnificenza
 
-> *«Non basta essere buono: bisogna parere magnifico.»*
+La spesa fatta perché si veda non era, nella Toscana del Quattrocento, materia
+di vanità privata: era argomento politico, e i suoi autori la difesero per
+iscritto come tale. Giovanni Rucellai annotò nelle proprie memorie che l'aver
+speso in fabbriche gli aveva procurato onore alla casa non meno che contentezza
+all'animo.
 
-La **Magnificenza** (0–10) è la spesa fatta perché si veda. Nella Toscana del
-Quattrocento non era vanità: era argomento politico. Chi costruiva una chiesa
-dimostrava di avere denaro, gusto, pietà e amici, e lo dimostrava per sempre.
+La **Magnificenza** (0–10) misura la spesa compiuta a fini di rappresentanza:
+fabbriche, opere d'arte, fondazioni pie, feste pubbliche. Chi edificava una
+chiesa dimostrava di possedere denaro, discernimento, pietà e amicizie, e ne
+dava dimostrazione durevole.
 
 ### Che cosa dà la Magnificenza
 - **Onore +1 ogni 2 gradi**;

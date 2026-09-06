@@ -2,6 +2,7 @@
 
 > *«Chi ha figliuoli ha bisogno di tutto; chi non ne ha, non ha bisogno di
 > nulla, e non è nulla.»*
+> — proverbio toscano
 
 Il casato è il vero personaggio del gioco. I congiunti nascono, si maritano,
 partono, muoiono; il nome resta, e con esso i debiti, le terre e i nemici.
@@ -207,7 +208,8 @@ designano.
   lite: −1 azione di casato per l'anno. Due Fallimenti di seguito impongono la
   divisione.
 - Fra partecipanti diversi che reggano fratelli diversi, la Prova si sostituisce
-  con una trattativa vera al tavolo: si divide il potere o si divide la roba.
+  con una trattativa condotta al tavolo: si divide il governo della casa, oppure
+  si divide il patrimonio.
 
 ### B. Dividere
 Ogni fratello prende la sua parte e fonda un proprio fuoco.

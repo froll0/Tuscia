@@ -44,6 +44,7 @@ Prova per tirare i due dadi contro un Contrasto. Si rigenera con
 | [04 — I personaggi](manuale/04-i-personaggi.md) | Il congiunto e il faccendiere |
 | [05 — Il sistema](manuale/05-sistema-di-gioco.md) | Prove, contese, Fortuna, conflitti |
 | [06 — Il corso dell'anno](manuale/06-corso-dell-anno.md) | Stagioni, fasi, azioni di casato |
+| [18 — Esempio di gioco](manuale/18-esempio-di-gioco.md) | **Una stagione intera giocata**, con ogni tiro mostrato |
 | [07 — Terre e rendite](manuale/07-terre-e-rendite.md) | Poderi, castelli, fedeltà, raccolti |
 | [08 — Banco e mercatura](manuale/08-banco-e-mercatura.md) | Denaro, cambio, traffici, debito |
 | [09 — Reggimento e uffici](manuale/09-reggimento-e-uffici.md) | Squittini, tratte, balìe, magistrature |
@@ -56,9 +57,15 @@ Prova per tirare i due dadi contro un Contrasto. Si rigenera con
 | [16 — Guida dell'Arbitro](manuale/16-guida-dell-arbitro.md) | Condotta della partita, città, eventi |
 | [17 — Appendici](manuale/17-appendici.md) | Monete, prezzi, misure, nomi, glossario, letture |
 
-Le schede da riprodurre e compilare si trovano nella cartella
-[`schede/`](schede/); le tavole di consultazione rapida in
-[`tavole/`](tavole/).
+Le sei schede sono **moduli stampabili e compilabili**:
+[`schede/schede-da-stampare.html`](schede/schede-da-stampare.html). Le tavole di
+consultazione rapida da tenere sul tavolo sono in [`tavole/`](tavole/).
+
+Chi non conosca il periodo cominci dal **fascicolo 02 § 6**, la cronologia
+ragionata, dove ogni avvenimento è descritto e accompagnato dall'indicazione di
+come se ne serva l'Arbitro. Chi voglia arrivare presto al tavolo legga il
+fascicolo 01 (che contiene il lessico e le convenzioni di scrittura), il 05 e il
+18.
 
 ---
 

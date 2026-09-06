@@ -117,14 +117,14 @@ secondo di ciascuna specie, li prenda in coppia.
 ### Difetti
 | | |
 |---|---|
-| **Collera** | Provocato, deve superare Contrasto 9 con Animo o rispondere per le rime |
+| **Collera** | Provocato, deve superare Contrasto 9 con Animo, o rispondere all'offesa senza indugio |
 | **Lussuria** | Compromette la propria discrezione; il Sospetto del casato cresce più in fretta |
 | **Avarizia** | −2 a ogni prova che richieda di spendere generosamente |
 | **Superbia** | Non sopporta di trattare con inferiori; −2 con popolo e servitori |
 | **Gioco** | Perde ogni stagione 2d6 × 10 fiorini se non supera Contrasto 9 con Animo |
 | **Gotta** | Un mese l'anno, tirato a caso, è inabile ad agire |
 | **Timore di Dio scrupoloso** | Non può commettere spergiuro né violare l'ospitalità |
-| **Lingua lunga** | Ogni segreto che apprende ha un dado di probabilità di sfuggirgli |
+| **Lingua lunga** | Ogni segreto che apprende gli sfugge se, tirato 1d6, esce 1 o 2 |
 | **Vendicativo** | Non può lasciare cadere un'offesa senza perdere 1 Punto Fortuna |
 | **Debole di petto** | Corpo −1; ogni inverno prova contro il morbo |
 | **Cattivo nome antico** | Il popolo gli attribuisce colpe non sue; Sospetto iniziale +1 |
@@ -267,8 +267,8 @@ il secondo mandato in fondo alla scheda, coperto.
 - Il doppio mandato dà una **azione supplementare** per stagione, ma ogni volta
   che se ne serve si tira 1d6: con **1**, un indizio cade sotto gli occhi di
   qualcuno (l'Arbitro decide di chi).
-- Se il doppio mandato è scoperto, la pena è quella d'uso: il bando, se va bene;
-  la corda in una notte di gennaio, se va male. Ma anche gli scoperti,
+- Se il doppio mandato è scoperto, la pena è quella consueta: il bando nei
+  casi migliori, la morte per mano di sicari nei peggiori. Ma anche gli scoperti,
   storicamente, spesso trovavano un terzo padrone.
 
 ## 6. Che cosa accade quando un personaggio muore

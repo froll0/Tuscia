@@ -86,6 +86,31 @@ dalla borsa finché non abbia saldato.
 minore di venticinque anni, perché in bando) rimette il gettone in borsa e perde
 l'occasione.
 
+### Esempio di squittinio e di tratta
+
+> **Autunno 1467, squittinio.** Nella borsa dei Priori l'Arbitro pone: dieci
+> gettoni neutri; sei gettoni per la casa medicea; tre per i Malavolti; due
+> ciascuno per altre quattro case non giocanti; e i gettoni dei casati giocanti.
+>
+> I Bencivenni hanno Seguito 4: possono dunque avere al massimo **quattro**
+> polizze. Ne hanno due. Filippo compie l'azione *Imborsare polizze*, spendendo
+> 200 fiorini.
+>
+> **Prova**: Grazia 3 + Legge 2 = 5; Contrasto **11**; Seguito 4 dà **+2** (uno
+> ogni due gradi). Andrea tira 2d6 e ottiene **8**. Totale: 8 + 5 + 2 = **15**.
+> Il Contrasto era 11 e il Successo pieno stava a 16: dunque **Successo**, una
+> polizza sola.
+>
+> **I Bencivenni hanno ora tre gettoni in borsa, su un totale di venticinque.**
+>
+> **Inverno 1467, tratta.** L'Arbitro rimescola la borsa e ne estrae tre gettoni
+> davanti a tutti. Escono: un neutro, un mediceo, e **un gettone Bencivenni**.
+> Filippo è tratto Priore per il bimestre di gennaio e febbraio.
+>
+> Per tre tratte, tutti i gettoni Bencivenni restano fuori della borsa: è il
+> **divieto**. Nessuna famiglia occupa gli uffici di continuo, e questa sola
+> regola impedisce che un partecipante si impadronisca del tavolo.
+
 ### Brogliare la tratta
 Si può corrompere il notaio delle Riformagioni, sostituire una borsa, aggiungere
 o sottrarre polizze.
