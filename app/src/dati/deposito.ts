@@ -1,16 +1,22 @@
 /**
  * Dove vivono le campagne.
- * Due depositi: il browser di chi gioca, e un progetto Supabase che il tavolo
- * condivide. Le chiavi di Supabase le inserisce l'utente: questo programma è
- * un sito statico e non contiene alcun segreto.
+ *
+ * Due depositi soltanto, e nessun account.
+ *  - il browser di chi gioca (IndexedDB), che non richiede nulla;
+ *  - un progetto Supabase, dove ogni campagna ha una chiave segreta: chi la
+ *    possiede legge e scrive, chi non l'ha non arriva alla tavola.
+ *
+ * Questo programma è un sito statico e non contiene alcun segreto: l'indirizzo
+ * del progetto e la chiave pubblica li inserisce chi gioca, e restano nel suo
+ * browser.
  */
 import type { Campagna } from '../modello/tipi'
+import { chiaviNote, chiaveDi, ricorda, scorda } from './chiavi'
 
 export type ConfigDeposito =
   | { sorta: 'locale' }
   | { sorta: 'supabase'; url: string; chiave: string }
 
-/** Esito di una singola verifica del collegamento. */
 export interface Esito { prova: string; bene: boolean; dettaglio: string }
 
 export interface Deposito {
@@ -20,17 +26,11 @@ export interface Deposito {
   leggi(id: string): Promise<Campagna | null>
   scrivi(c: Campagna): Promise<void>
   cancella(id: string): Promise<void>
-  utente?(): Promise<string | null>
-  entra?(email: string): Promise<void>
-  esci?(): Promise<void>
-  codiceDi?(id: string): Promise<string | null>
-  entraConCodice?(codice: string): Promise<string>
+  /** Solo Supabase: la chiave da dare agli altri giocatori. */
+  chiaveDiCampagna?(id: string): string | null
+  /** Solo Supabase: sedersi a un tavolo altrui con la chiave ricevuta. */
+  entraConChiave?(chiave: string): Promise<Campagna>
   verifica?(): Promise<Esito[]>
-  indirizzoDiRitorno?: string
-  ascoltaAccesso?(quando: (utente: string | null) => void): () => void
-  scambiaCodice?(): Promise<{ fatto: boolean; messaggio: string } | null>
-  entraConParola?(email: string, parola: string, nuova: boolean): Promise<void>
-  ascolta?(id: string, quando: (c: Campagna) => void): () => void
 }
 
 /* --------------------------------------------------------- deposito locale */
@@ -77,181 +77,85 @@ export const depositoLocale: Deposito = {
 
 /* ------------------------------------------------------ deposito Supabase */
 
-const TAVOLA = 'campagne'
-
-export async function creaDepositoSupabase(url: string, chiave: string): Promise<Deposito> {
+export async function creaDepositoSupabase(url: string, chiavePubblica: string): Promise<Deposito> {
   const { createClient } = await import('@supabase/supabase-js')
-  // Il programma adopera un router a cancelletto, e il flusso implicito di
-  // Supabase restituisce i gettoni proprio nel cancelletto: i due si
-  // contenderebbero lo stesso pezzo di URL e la sessione non si stabilirebbe
-  // mai. Col flusso PKCE il gettone torna come parametro di ricerca, che al
-  // router non interessa.
-  const sb = createClient(url, chiave, {
-    auth: {
-      persistSession: true,
-      autoRefreshToken: true,
-      // Lo scambio lo facciamo noi in scambiaCodice(): cosi' il guasto si puo'
-      // riferire a chi gioca, invece di essere ingoiato dalla libreria.
-      detectSessionInUrl: false,
-      flowType: 'pkce',
-    },
-  })
+  const sb = createClient(url, chiavePubblica, { auth: { persistSession: false } })
 
-  /** L'indirizzo di ritorno dev'essere senza cancelletto e senza parametri. */
-  const doveTornare = () => `${window.location.origin}${window.location.pathname}`
-
-  const daRiga = (r: { dati: Campagna }) => r.dati
+  const guasto = (m: string): Error => {
+    if (/function .*(apri_campagna|leggi_campagne|scrivi_campagna).*(does not exist)|schema cache|Could not find the function/i.test(m)) {
+      return new Error('Il progetto non conosce ancora le funzioni del gioco: '
+        + 'eseguite il testo SQL che trovate qui sotto, nel SQL Editor del progetto.')
+    }
+    return new Error(m)
+  }
 
   return {
     sorta: 'supabase',
     descrizione: new URL(url).host,
-    async utente() {
-      const { data } = await sb.auth.getUser()
-      return data.user?.email ?? null
-    },
-    /** Al ritorno dal collegamento: si scambia il codice e si dice com'e' andata. */
-    async scambiaCodice() {
-      const p = new URLSearchParams(window.location.search)
-      const errore = p.get('error_description') ?? p.get('error')
-      const codice = p.get('code')
-      const pulisci = () => {
-        const netto = `${window.location.origin}${window.location.pathname}${window.location.hash}`
-        window.history.replaceState({}, '', netto)
-      }
-      if (errore) { pulisci(); return { fatto: false, messaggio: errore } }
-      if (!codice) return null
-      const { error } = await sb.auth.exchangeCodeForSession(codice)
-      pulisci()
-      if (!error) return { fatto: true, messaggio: 'Siete entrato.' }
-      const m = error.message
-      if (/verifier|challenge/i.test(m)) {
-        return { fatto: false, messaggio:
-          'Il collegamento è stato aperto in un browser diverso da quello che l’ha chiesto, ' +
-          'oppure i dati del sito sono stati cancellati nel frattempo. Chiedete il collegamento ' +
-          'e apritelo nel medesimo browser; se la posta lo apre in una finestra propria, ' +
-          'copiatelo e incollatelo qui. In alternativa, entrate con la parola d’ordine.' }
-      }
-      if (/expired|invalid|already/i.test(m)) {
-        return { fatto: false, messaggio:
-          'Il collegamento è scaduto o era già stato adoperato. Accade spesso quando il ' +
-          'servizio di posta lo apre da sé per esaminarlo, consumandolo prima di voi: ' +
-          'in quel caso conviene la parola d’ordine. Messaggio del server: ' + m }
-      }
-      return { fatto: false, messaggio: m }
-    },
 
-    /** Via che non dipende dalla posta né dal browser: parola d'ordine. */
-    async entraConParola(email: string, parola: string, nuova: boolean) {
-      const f = nuova
-        ? await sb.auth.signUp({ email, password: parola, options: { emailRedirectTo: doveTornare() } })
-        : await sb.auth.signInWithPassword({ email, password: parola })
-      if (f.error) throw new Error(f.error.message)
-      if (nuova && !f.data.session) {
-        throw new Error(
-          'Il conto è stato creato, ma il progetto esige la conferma per posta. ' +
-          'Confermate una volta, oppure spegnete «Confirm email» in Authentication → Sign In / Providers.')
-      }
-    },
+    chiaveDiCampagna: (id) => chiaveDi(id),
 
-    async entra(email: string) {
-      const { error } = await sb.auth.signInWithOtp({
-        email, options: { emailRedirectTo: doveTornare() },
-      })
-      if (error) throw new Error(error.message)
-    },
-    indirizzoDiRitorno: doveTornare(),
-    ascoltaAccesso(quando) {
-      const { data } = sb.auth.onAuthStateChange((_evento, sessione) => {
-        quando(sessione?.user.email ?? null)
-      })
-      return () => data.subscription.unsubscribe()
-    },
-    async esci() { await sb.auth.signOut() },
     async elenca() {
-      const { data, error } = await sb.from(TAVOLA).select('dati').order('aggiornata_il', { ascending: false })
-      if (error) throw new Error(error.message)
-      return (data ?? []).map(daRiga as never)
+      const chiavi = chiaviNote().map((k) => k.chiave)
+      if (chiavi.length === 0) return []
+      const { data, error } = await sb.rpc('leggi_campagne', { p_chiavi: chiavi })
+      if (error) throw guasto(error.message)
+      return (data ?? []) as Campagna[]
     },
+
     async leggi(id) {
-      const { data, error } = await sb.from(TAVOLA).select('dati').eq('id', id).maybeSingle()
-      if (error) throw new Error(error.message)
-      return data ? daRiga(data as never) : null
+      const k = chiaveDi(id)
+      if (!k) return null
+      const { data, error } = await sb.rpc('leggi_campagne', { p_chiavi: [k] })
+      if (error) throw guasto(error.message)
+      return ((data ?? []) as Campagna[])[0] ?? null
     },
+
     async scrivi(c) {
-      // Senza sessione la riga non ha proprietario, e la regola per riga la
-      // rifiuta con un messaggio oscuro. Meglio dirlo qui, e in italiano.
-      const { data: s } = await sb.auth.getSession()
-      if (!s.session) {
-        throw new Error(
-          'Non siete entrato nel progetto Supabase: nulla si può scrivere. ' +
-          'Andate alla pagina Deposito e fatevi mandare il collegamento per posta.')
+      const k = chiaveDi(c.id)
+      if (!k) {
+        // Prima scrittura: si apre la campagna e si riceve la sua chiave.
+        const { data, error } = await sb.rpc('apri_campagna', { p_dati: c })
+        if (error) throw guasto(error.message)
+        ricorda({ id: c.id, nome: c.nome, chiave: String(data) })
+        return
       }
-      // Il proprietario non si manda mai dal programma: alla prima scrittura lo
-      // pone la base di dati (default auth.uid()), e in seguito non si muta.
-      const { error } = await sb.from(TAVOLA).upsert({
-        id: c.id, nome: c.nome, dati: c, aggiornata_il: new Date().toISOString(),
-      })
-      if (error) {
-        if (/row-level security/i.test(error.message)) {
-          throw new Error(
-            'Il progetto Supabase ha rifiutato la scrittura. Di regola significa che le ' +
-            'tavole sono state create con una versione precedente del testo SQL: si ' +
-            'riesegua quello che la pagina Deposito mostra ora. Messaggio del server: ' +
-            error.message)
-        }
-        throw new Error(error.message)
-      }
+      const { error } = await sb.rpc('scrivi_campagna', { p_chiave: k, p_dati: c })
+      if (error) throw guasto(error.message)
+      ricorda({ id: c.id, nome: c.nome, chiave: k })
     },
+
     async cancella(id) {
-      const { error } = await sb.from(TAVOLA).delete().eq('id', id)
-      if (error) throw new Error(error.message)
+      const k = chiaveDi(id)
+      if (!k) return
+      const { error } = await sb.rpc('cancella_campagna', { p_chiave: k })
+      if (error) throw guasto(error.message)
+      scorda(k)
     },
-    async codiceDi(id) {
-      const { data, error } = await sb.from(TAVOLA).select('codice').eq('id', id).maybeSingle()
-      if (error) return null
-      return (data as { codice?: string } | null)?.codice ?? null
+
+    async entraConChiave(chiave) {
+      const k = chiave.trim()
+      const { data, error } = await sb.rpc('leggi_campagne', { p_chiavi: [k] })
+      if (error) throw guasto(error.message)
+      const c = ((data ?? []) as Campagna[])[0]
+      if (!c) throw new Error('Nessuna campagna risponde a questa chiave. Controllatela: si copia e si incolla intera.')
+      ricorda({ id: c.id, nome: c.nome, chiave: k })
+      return c
     },
-    async entraConCodice(codice) {
-      const { data: s } = await sb.auth.getSession()
-      if (!s.session) throw new Error('Entrate prima nel progetto, poi adoperate il codice.')
-      const { data, error } = await sb.rpc('entra_con_codice', { il_codice: codice.trim() })
-      if (error) throw new Error(error.message)
-      return String(data)
-    },
+
     async verifica() {
       const esiti: Esito[] = []
-      const { data: s } = await sb.auth.getSession()
-      esiti.push(s.session
-        ? { prova: 'Sessione', bene: true, dettaglio: `entrati come ${s.session.user.email ?? 'utente senza posta'}` }
-        : { prova: 'Sessione', bene: false, dettaglio: 'non siete entrato: fatevi mandare il collegamento per posta' })
-
-      const { error: eSel } = await sb.from(TAVOLA).select('id').limit(1)
-      if (!eSel) {
-        esiti.push({ prova: 'Tavola «campagne»', bene: true,
-          dettaglio: s.session
-            ? 'esiste e si può leggere'
-            : 'esiste, ma senza sessione la regola per riga nasconde ogni riga' })
-      } else if (/does not exist|schema cache|relation/i.test(eSel.message)) {
-        esiti.push({ prova: 'Tavola «campagne»', bene: false,
-          dettaglio: 'non esiste: eseguite il testo SQL qui sotto nel SQL Editor del progetto' })
-      } else {
-        esiti.push({ prova: 'Tavola «campagne»', bene: false, dettaglio: eSel.message })
-      }
-
-      const { error: eCod } = await sb.from(TAVOLA).select('codice').limit(1)
-      esiti.push(eCod
-        ? { prova: 'Testo SQL aggiornato', bene: false,
-            dettaglio: 'manca la colonna «codice»: rieseguite il testo SQL qui sotto' }
-        : { prova: 'Testo SQL aggiornato', bene: true, dettaglio: 'la colonna «codice» c’è' })
-
+      const { error } = await sb.rpc('leggi_campagne', { p_chiavi: [] })
+      esiti.push(error
+        ? { prova: 'Il progetto', bene: false, dettaglio: guasto(error.message).message }
+        : { prova: 'Il progetto', bene: true, dettaglio: 'risponde, e conosce le funzioni del gioco' })
+      const n = chiaviNote().length
+      esiti.push({
+        prova: 'Chiavi in questo browser', bene: true,
+        dettaglio: n === 0 ? 'nessuna: aprite una campagna, oppure entrate con una chiave ricevuta'
+                           : `${n} ${n === 1 ? 'campagna conosciuta' : 'campagne conosciute'}`,
+      })
       return esiti
-    },
-    ascolta(id, quando) {
-      const canale = sb.channel(`campagna:${id}`)
-        .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: TAVOLA, filter: `id=eq.${id}` },
-          (m) => { const r = m.new as { dati?: Campagna }; if (r.dati) quando(r.dati) })
-        .subscribe()
-      return () => { void sb.removeChannel(canale) }
     },
   }
 }
@@ -273,9 +177,9 @@ export function scriviConfig(c: ConfigDeposito): void {
 }
 
 /**
- * Apre il deposito scelto. Se il progetto Supabase non si apre, questa funzione
- * GETTA: chi la chiama deve dirlo a chi gioca. Tornare in silenzio al deposito
- * locale farebbe credere che i dati siano condivisi mentre non lo sono.
+ * Apre il deposito scelto. Se il progetto non si apre, GETTA: tornare in
+ * silenzio al deposito locale farebbe credere che i dati siano condivisi
+ * mentre non lo sono.
  */
 export async function apriDeposito(c: ConfigDeposito): Promise<Deposito> {
   if (c.sorta === 'supabase') return creaDepositoSupabase(c.url, c.chiave)

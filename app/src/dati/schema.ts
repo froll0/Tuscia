@@ -1,96 +1,60 @@
 export const SQL_SCHEMA = `-- La Prima Casa della Tuscia — tavole per Supabase.
--- Si può eseguire più volte senza danno: ogni istruzione è ripetibile.
+-- Si esegue una volta sola, nel SQL Editor del progetto. Nessun account.
+-- Chi possiede la chiave di una campagna la legge e la scrive; chi non l'ha,
+-- non arriva alla tavola in alcun modo.
 
 create extension if not exists pgcrypto;
 
 create table if not exists public.campagne (
   id            uuid primary key,
-  proprietario  uuid references auth.users on delete set null,
   nome          text not null,
   dati          jsonb not null,
-  codice        text unique default encode(gen_random_bytes(4), 'hex'),
+  chiave        text not null unique default encode(gen_random_bytes(16), 'hex'),
   aggiornata_il timestamptz not null default now()
 );
 
-create table if not exists public.membri (
-  campagna_id uuid references public.campagne on delete cascade,
-  utente      uuid references auth.users on delete cascade,
-  ruolo       text not null default 'giocatore',
-  primary key (campagna_id, utente)
-);
+-- Regola per riga accesa e nessuna regola scritta: la tavola non e'
+-- raggiungibile direttamente. Si passa dalle quattro funzioni qui sotto, che
+-- esigono la chiave.
+alter table public.campagne enable row level security;
 
--- Il proprietario lo pone la base di dati, non il programma: chi apre una
--- campagna ne è il padrone, e nessuna scrittura successiva può cambiarlo.
-alter table public.campagne alter column proprietario set default auth.uid();
-alter table public.campagne alter column codice set default encode(gen_random_bytes(4), 'hex');
-update public.campagne set codice = encode(gen_random_bytes(4), 'hex') where codice is null;
-
-create or replace function public.proprietario_immutabile() returns trigger
-language plpgsql as $$
+create or replace function public.apri_campagna(p_dati jsonb)
+returns text language plpgsql security definer set search_path = public as $$
+declare k text;
 begin
-  new.proprietario := old.proprietario;
-  return new;
+  insert into public.campagne (id, nome, dati)
+  values ((p_dati->>'id')::uuid, coalesce(p_dati->>'nome', 'senza nome'), p_dati)
+  returning chiave into k;
+  return k;
 end $$;
 
-drop trigger if exists campagne_proprietario_immutabile on public.campagne;
-create trigger campagne_proprietario_immutabile
-  before update on public.campagne
-  for each row execute function public.proprietario_immutabile();
-
-alter table public.campagne enable row level security;
-alter table public.membri   enable row level security;
-
-create or replace function public.e_membro(c uuid) returns boolean
-language sql security definer stable set search_path = public as $$
-  select exists (select 1 from public.membri m where m.campagna_id = c and m.utente = auth.uid())
+create or replace function public.leggi_campagne(p_chiavi text[])
+returns setof jsonb language sql security definer stable set search_path = public as $$
+  select dati from public.campagne
+   where chiave = any(p_chiavi)
+   order by aggiornata_il desc
 $$;
 
-drop policy if exists "leggere le proprie campagne" on public.campagne;
-create policy "leggere le proprie campagne" on public.campagne for select
-  using (proprietario = auth.uid() or public.e_membro(id));
-
-drop policy if exists "aprire una campagna" on public.campagne;
-create policy "aprire una campagna" on public.campagne for insert
-  with check (proprietario = auth.uid());
-
-drop policy if exists "mutare la campagna" on public.campagne;
-create policy "mutare la campagna" on public.campagne for update
-  using (proprietario = auth.uid() or public.e_membro(id))
-  with check (proprietario = auth.uid() or public.e_membro(id));
-
-drop policy if exists "chiudere la campagna" on public.campagne;
-create policy "chiudere la campagna" on public.campagne for delete
-  using (proprietario = auth.uid());
-
-drop policy if exists "vedere i membri" on public.membri;
-create policy "vedere i membri" on public.membri for select
-  using (utente = auth.uid()
-         or exists (select 1 from public.campagne c where c.id = campagna_id and c.proprietario = auth.uid()));
-
-drop policy if exists "uscire dalla campagna" on public.membri;
-create policy "uscire dalla campagna" on public.membri for delete
-  using (utente = auth.uid()
-         or exists (select 1 from public.campagne c where c.id = campagna_id and c.proprietario = auth.uid()));
-
--- Un giocatore entra nella campagna col codice che l'Arbitro gli ha dato.
-create or replace function public.entra_con_codice(il_codice text) returns uuid
-language plpgsql security definer set search_path = public as $$
-declare c uuid;
+create or replace function public.scrivi_campagna(p_chiave text, p_dati jsonb)
+returns void language plpgsql security definer set search_path = public as $$
 begin
-  if auth.uid() is null then raise exception 'Bisogna essere entrati'; end if;
-  select id into c from public.campagne where codice = il_codice;
-  if c is null then raise exception 'Codice sconosciuto'; end if;
-  insert into public.membri (campagna_id, utente) values (c, auth.uid())
-    on conflict do nothing;
-  return c;
+  update public.campagne
+     set dati = p_dati,
+         nome = coalesce(p_dati->>'nome', nome),
+         aggiornata_il = now()
+   where chiave = p_chiave;
+  if not found then raise exception 'Chiave sconosciuta'; end if;
 end $$;
 
-grant execute on function public.entra_con_codice(text) to authenticated;
-
--- Perché la sincronia in tempo reale funzioni:
-do $$
+create or replace function public.cancella_campagna(p_chiave text)
+returns void language plpgsql security definer set search_path = public as $$
 begin
-  alter publication supabase_realtime add table public.campagne;
-exception when duplicate_object then null;
+  delete from public.campagne where chiave = p_chiave;
+  if not found then raise exception 'Chiave sconosciuta'; end if;
 end $$;
+
+grant execute on function public.apri_campagna(jsonb)        to anon, authenticated;
+grant execute on function public.leggi_campagne(text[])      to anon, authenticated;
+grant execute on function public.scrivi_campagna(text,jsonb) to anon, authenticated;
+grant execute on function public.cancella_campagna(text)     to anon, authenticated;
 `

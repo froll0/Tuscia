@@ -41,32 +41,29 @@ Nessun numero è scritto altrove che in `tavole.ts`.
 
 ## Il deposito dei dati
 
+**Nessun account, nessuna parola d'ordine, nessuna posta elettronica.**
+
 **Questo browser** (predefinito). Le campagne stanno in IndexedDB. Non occorre
-nulla, funziona anche senza rete, ma non c'è stato condiviso: l'Arbitro tiene
-l'unica copia buona.
+nulla e funziona anche senza rete, ma non c'è stato condiviso.
 
-**Supabase** (per giocare in più persone). Occorrono tre cose, e la terza si
-dimentica sempre:
+**Supabase** (per giocare in più persone). Tre passi: si apre un progetto
+gratuito, si esegue una volta il testo SQL che il programma mostra, si
+incollano l'URL e la chiave `anon`.
 
-1. aprire un progetto gratuito ed eseguire una volta, nel *SQL Editor*, il testo
-   che il programma mostra nella pagina *Deposito*;
-2. incollare nella medesima pagina l'URL del progetto e la chiave `anon`;
-3. in *Authentication → URL Configuration*, aggiungere fra i **Redirect URLs**
-   l'indirizzo che il programma mostra sotto il riquadro dell'accesso — di
-   regola `https://<utente>.github.io/Tuscia/` e, per lo sviluppo,
-   `http://localhost:5173/`.
+Ogni campagna riceve allora una **chiave segreta**. Chi la possiede la legge e
+la scrive; chi non l'ha non arriva alla tavola in alcun modo. L'Arbitro trova la
+chiave in capo alla pagina della campagna e la dà ai giocatori, che la incollano
+nella pagina *Deposito*.
 
-Senza il terzo passo il collegamento arriva per posta ma non fa entrare, e ogni
-scrittura viene respinta dalla regola per riga.
+Come funziona sotto: la tavola `campagne` ha la regola per riga accesa e
+**nessuna regola scritta**, sicché non è raggiungibile direttamente nemmeno con
+la chiave pubblica. Ogni accesso passa da quattro funzioni `security definer`
+che esigono la chiave della campagna.
 
-L'accesso adopera il **flusso PKCE**, non quello implicito: il programma ha un
-router a cancelletto, e il flusso implicito restituirebbe i gettoni proprio nel
-cancelletto, contendendoselo col router. Col PKCE il gettone torna come
-parametro di ricerca e i due non si toccano.
-
-La chiave pubblica (`anon`) è pubblica per disegno: a proteggere le righe è la
-*row level security*, che il testo SQL configura. Le chiavi restano in questo
-browser e non entrano mai nel repository.
+Il rovescio, detto chiaramente: **la chiave è un lasciapassare**. Chi la ottiene
+può modificare la campagna, e non c'è modo di distinguere l'Arbitro dai
+giocatori. Per un tavolo di amici è la scelta giusta; per un uso pubblico non lo
+sarebbe.
 
 ## Che cosa c'è e che cosa manca
 

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { usaCampagna, usaDati, usaMutaCampagna } from '../dati/contesto'
 import { Campo, Dado, Foglio, Misura, Vuoto, fiorini } from './comuni'
@@ -27,15 +27,7 @@ export default function Cruscotto() {
   const [bonus, setBonus] = useState(5)
   const [contrasto, setContrasto] = useState(10)
   const { deposito } = usaDati()
-  const [codice, setCodice] = useState<string | null>(null)
-
-  useEffect(() => {
-    let vivo = true
-    if (id && deposito.codiceDi) {
-      void deposito.codiceDi(id).then((c) => { if (vivo) setCodice(c) })
-    } else setCodice(null)
-    return () => { vivo = false }
-  }, [id, deposito])
+  const chiave = id ? deposito.chiaveDiCampagna?.(id) ?? null : null
 
   if (!campagna) return <Vuoto>Campagna non trovata in questo deposito.</Vuoto>
 
@@ -92,19 +84,17 @@ export default function Cruscotto() {
         </Link>
       </div>
 
-      {codice && (
-        <Foglio titolo="Il codice d'invito">
+      {chiave && (
+        <Foglio titolo="La chiave di questa campagna">
           <p className="glossa">
-            Chi vuole sedersi a questo tavolo apra il programma, entri nel medesimo progetto
-            Supabase, e adoperi questo codice nella pagina Deposito.
+            Datela ai giocatori: la incolleranno nella pagina Deposito e si siederanno al tavolo.
+            Chi la possiede può leggere e scrivere, dunque si tratti come la chiave di casa.
           </p>
           <div className="riga" style={{ marginTop: '.6rem' }}>
-            <code style={{ fontFamily: 'var(--apparato)', fontSize: '1.3rem', letterSpacing: '.2em',
+            <code style={{ fontFamily: 'var(--apparato)', fontSize: '1rem', letterSpacing: '.08em',
                            border: '1px solid var(--bordo)', padding: '.4rem .8rem',
-                           background: 'var(--carta-2)' }}>{codice}</code>
-            <button type="button" onClick={() => void navigator.clipboard?.writeText(codice)}>
-              Copiare
-            </button>
+                           background: 'var(--carta-2)', wordBreak: 'break-all' }}>{chiave}</code>
+            <button type="button" onClick={() => void navigator.clipboard?.writeText(chiave)}>Copiare</button>
           </div>
         </Foglio>
       )}

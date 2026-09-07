@@ -1,4 +1,4 @@
-import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react'
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import type { ReactNode } from 'react'
 import type { Campagna } from '../modello/tipi'
 import { apriDeposito, depositoLocale, leggiConfig, scriviConfig } from './deposito'
@@ -11,11 +11,10 @@ interface Contesto {
   campagne: Campagna[]
   caricando: boolean
   errore: string | null
+  scordaErrore: () => void
   ricarica: () => Promise<void>
   salva: (c: Campagna) => Promise<void>
   cancella: (id: string) => Promise<void>
-  utente: string | null
-  scordaErrore: () => void
 }
 
 const Ctx = createContext<Contesto | null>(null)
@@ -26,10 +25,6 @@ export function ProvvedeDati({ children }: { children: ReactNode }) {
   const [campagne, setCampagne] = useState<Campagna[]>([])
   const [caricando, setCaricando] = useState(true)
   const [errore, setErrore] = useState<string | null>(null)
-  const [utente, setUtente] = useState<string | null>(null)
-  const vivo = useRef(true)
-
-  useEffect(() => () => { vivo.current = false }, [])
 
   useEffect(() => {
     let annullato = false
@@ -39,33 +34,21 @@ export function ProvvedeDati({ children }: { children: ReactNode }) {
       try {
         d = await apriDeposito(config)
       } catch (e) {
-        // Il progetto non si apre: si resta in locale, ma lo si dice.
         if (annullato) return
         setDeposito(depositoLocale)
-        setErrore(`Non si è potuto aprire il progetto Supabase: ${e instanceof Error ? e.message : String(e)}. `
-          + 'Si controllino URL e chiave. Intanto i dati restano in questo browser.')
+        setErrore(`Non si è potuto aprire il progetto: ${e instanceof Error ? e.message : String(e)}. `
+          + 'Si controllino indirizzo e chiave pubblica. Intanto i dati restano in questo browser.')
         setCampagne(await depositoLocale.elenca())
-        setUtente(null)
         setCaricando(false)
         return
       }
       if (annullato) return
       setDeposito(d)
-      // Se si torna dal collegamento ricevuto per posta, il codice va scambiato
-      // adesso, prima di leggere alcunché.
-      let esitoAccesso: string | null = null
-      if (d.scambiaCodice) {
-        try {
-          const r = await d.scambiaCodice()
-          if (r && !r.fatto) esitoAccesso = r.messaggio
-        } catch (e) { esitoAccesso = e instanceof Error ? e.message : String(e) }
-      }
       try {
-        setUtente(d.utente ? await d.utente() : null)
         setCampagne(await d.elenca())
-        setErrore(esitoAccesso)
+        setErrore(null)
       } catch (e) {
-        setErrore(esitoAccesso ?? (e instanceof Error ? e.message : String(e)))
+        setErrore(e instanceof Error ? e.message : String(e))
         setCampagne([])
       } finally {
         if (!annullato) setCaricando(false)
@@ -74,21 +57,9 @@ export function ProvvedeDati({ children }: { children: ReactNode }) {
     return () => { annullato = true }
   }, [config])
 
-  // Tornando dal collegamento ricevuto per posta, la sessione si stabilisce
-  // qualche istante dopo il caricamento: si sta in ascolto e si riprende tutto.
-  useEffect(() => {
-    if (!deposito.ascoltaAccesso) return
-    return deposito.ascoltaAccesso((chi) => {
-      setUtente(chi)
-      void deposito.elenca().then(setCampagne).catch(() => { /* gia' segnalato */ })
-      if (chi) setErrore(null)
-    })
-  }, [deposito])
-
   const ricarica = useCallback(async () => {
     try {
       setCampagne(await deposito.elenca())
-      setUtente(deposito.utente ? await deposito.utente() : null)
       setErrore(null)
     } catch (e) { setErrore(e instanceof Error ? e.message : String(e)) }
   }, [deposito])
@@ -118,15 +89,12 @@ export function ProvvedeDati({ children }: { children: ReactNode }) {
     setCampagne((v) => v.filter((c) => c.id !== id))
   }, [deposito])
 
+  const mutaConfig = useCallback((c: ConfigDeposito) => { scriviConfig(c); setConfig(c) }, [])
   const scordaErrore = useCallback(() => setErrore(null), [])
 
-  const mutaConfig = useCallback((c: ConfigDeposito) => { scriviConfig(c); setConfig(c) }, [])
-
   const valore = useMemo<Contesto>(() => ({
-    deposito, config, mutaConfig, campagne, caricando, errore, ricarica, salva, cancella, utente,
-    scordaErrore,
-  }), [deposito, config, mutaConfig, campagne, caricando, errore, ricarica, salva, cancella, utente,
-       scordaErrore])
+    deposito, config, mutaConfig, campagne, caricando, errore, scordaErrore, ricarica, salva, cancella,
+  }), [deposito, config, mutaConfig, campagne, caricando, errore, scordaErrore, ricarica, salva, cancella])
 
   return <Ctx.Provider value={valore}>{children}</Ctx.Provider>
 }
