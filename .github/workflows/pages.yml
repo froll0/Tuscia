@@ -2,7 +2,11 @@ name: Pubblicare su GitHub Pages
 
 on:
   push:
-    branches: [main]
+    # Il ramo predefinito del repository. Se un giorno lo si rinomina in `main`,
+    # la riga sottostante lo copre gia'.
+    branches:
+      - claude/gdr-toscana-gestionale-yeyayj
+      - main
   workflow_dispatch:
 
 permissions:

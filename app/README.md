@@ -69,3 +69,21 @@ campagna; congegno della Prova.
 i tiri condivisi e le azioni d'Ombra segrete; la chat e la stanza audio e video;
 le trame, gli eserciti e le battaglie condotti dal programma; lo squittinio e la
 tratta con la borsa; il computo annuale della famiglia.
+
+## La pubblicazione
+
+Il workflow `.github/workflows/pages.yml` fa tutto: installa, esegue le prove
+del motore delle regole, costruisce il programma, compone il manuale in
+`/manuale/` e le schede in `/schede/`, e pubblica su GitHub Pages.
+
+Perché funzioni occorre **una impostazione sola**, da fare una volta:
+
+> **Settings → Pages → Build and deployment → Source: GitHub Actions**
+
+Non serve creare alcun workflow a mano: quello proposto da GitHub nella scheda
+Actions è un modello dimostrativo che stampa «Hello world» e non fa altro.
+
+Il workflow parte a ogni spinta sul ramo predefinito, e si può lanciare a mano
+dalla scheda **Actions → Pubblicare su GitHub Pages → Run workflow**.
+
+Se le prove del motore falliscono, la pubblicazione non avviene: è voluto.
