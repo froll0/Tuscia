@@ -51,12 +51,21 @@ export function ProvvedeDati({ children }: { children: ReactNode }) {
       }
       if (annullato) return
       setDeposito(d)
+      // Se si torna dal collegamento ricevuto per posta, il codice va scambiato
+      // adesso, prima di leggere alcunché.
+      let esitoAccesso: string | null = null
+      if (d.scambiaCodice) {
+        try {
+          const r = await d.scambiaCodice()
+          if (r && !r.fatto) esitoAccesso = r.messaggio
+        } catch (e) { esitoAccesso = e instanceof Error ? e.message : String(e) }
+      }
       try {
         setUtente(d.utente ? await d.utente() : null)
         setCampagne(await d.elenca())
-        setErrore(null)
+        setErrore(esitoAccesso)
       } catch (e) {
-        setErrore(e instanceof Error ? e.message : String(e))
+        setErrore(esitoAccesso ?? (e instanceof Error ? e.message : String(e)))
         setCampagne([])
       } finally {
         if (!annullato) setCaricando(false)

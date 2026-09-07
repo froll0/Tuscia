@@ -13,6 +13,8 @@ export default function Impostazioni() {
   const [codice, setCodice] = useState('')
   const [esiti, setEsiti] = useState<Esito[] | null>(null)
   const [provando, setProvando] = useState(false)
+  const [parola, setParola] = useState('')
+  const [nuovoConto, setNuovoConto] = useState(false)
 
   async function accedi() {
     if (!deposito.entra) return
@@ -111,13 +113,50 @@ export default function Impostazioni() {
                   <button type="button" className="minuto" onClick={() => { void deposito.esci?.(); void ricarica() }}>Uscire</button>
                 </p>
               : (
-                <div className="riga" style={{ marginTop: '.5rem' }}>
-                  <input value={email} onChange={(e) => setEmail(e.target.value)}
-                         placeholder="la vostra posta elettronica" style={{ maxWidth: '20rem' }} />
-                  <button type="button" onClick={() => void accedi()} disabled={!email.includes('@')}>
-                    Mandami il collegamento
-                  </button>
-                </div>
+                <>
+                  <div className="riga" style={{ marginTop: '.5rem' }}>
+                    <input value={email} onChange={(e) => setEmail(e.target.value)}
+                           placeholder="la vostra posta elettronica" style={{ maxWidth: '20rem' }} />
+                  </div>
+
+                  <h3 style={{ marginTop: '1rem' }}>Con la parola d&apos;ordine <span className="pastiglia verde">via sicura</span></h3>
+                  <p className="glossa">
+                    Non dipende dalla posta né dal browser in cui si apre il collegamento: è la
+                    via che riesce sempre.
+                  </p>
+                  <div className="riga" style={{ marginTop: '.5rem' }}>
+                    <input type="password" value={parola} onChange={(e) => setParola(e.target.value)}
+                           placeholder="parola d'ordine" style={{ maxWidth: '16rem' }} />
+                    <label className="riga" style={{ gap: '.35rem' }}>
+                      <input type="checkbox" checked={nuovoConto} style={{ width: 'auto' }}
+                             onChange={(e) => setNuovoConto(e.target.checked)} />
+                      <span className="etichetta">è la prima volta</span>
+                    </label>
+                    <button type="button" className="primario"
+                            disabled={!email.includes('@') || parola.length < 6}
+                            onClick={() => {
+                              void (async () => {
+                                try {
+                                  await deposito.entraConParola?.(email.trim(), parola, nuovoConto)
+                                  await ricarica()
+                                  setAvviso(null); setParola('')
+                                } catch (e) { setAvviso(e instanceof Error ? e.message : String(e)) }
+                              })()
+                            }}>
+                      {nuovoConto ? 'Aprire il conto' : 'Entrare'}
+                    </button>
+                  </div>
+
+                  <h3 style={{ marginTop: '1.2rem' }}>Oppure col collegamento per posta</h3>
+                  <div className="riga" style={{ marginTop: '.4rem' }}>
+                    <button type="button" onClick={() => void accedi()} disabled={!email.includes('@')}>
+                      Mandami il collegamento
+                    </button>
+                    <span className="minuto">
+                      Apritelo nel medesimo browser che l&apos;ha chiesto.
+                    </span>
+                  </div>
+                </>
               )}
             {avviso && <div className="avviso lieto">{avviso}</div>}
             {!utente && deposito.indirizzoDiRitorno && (

@@ -28,6 +28,8 @@ export interface Deposito {
   verifica?(): Promise<Esito[]>
   indirizzoDiRitorno?: string
   ascoltaAccesso?(quando: (utente: string | null) => void): () => void
+  scambiaCodice?(): Promise<{ fatto: boolean; messaggio: string } | null>
+  entraConParola?(email: string, parola: string, nuova: boolean): Promise<void>
   ascolta?(id: string, quando: (c: Campagna) => void): () => void
 }
 
@@ -88,7 +90,9 @@ export async function creaDepositoSupabase(url: string, chiave: string): Promise
     auth: {
       persistSession: true,
       autoRefreshToken: true,
-      detectSessionInUrl: true,
+      // Lo scambio lo facciamo noi in scambiaCodice(): cosi' il guasto si puo'
+      // riferire a chi gioca, invece di essere ingoiato dalla libreria.
+      detectSessionInUrl: false,
       flowType: 'pkce',
     },
   })
@@ -105,6 +109,50 @@ export async function creaDepositoSupabase(url: string, chiave: string): Promise
       const { data } = await sb.auth.getUser()
       return data.user?.email ?? null
     },
+    /** Al ritorno dal collegamento: si scambia il codice e si dice com'e' andata. */
+    async scambiaCodice() {
+      const p = new URLSearchParams(window.location.search)
+      const errore = p.get('error_description') ?? p.get('error')
+      const codice = p.get('code')
+      const pulisci = () => {
+        const netto = `${window.location.origin}${window.location.pathname}${window.location.hash}`
+        window.history.replaceState({}, '', netto)
+      }
+      if (errore) { pulisci(); return { fatto: false, messaggio: errore } }
+      if (!codice) return null
+      const { error } = await sb.auth.exchangeCodeForSession(codice)
+      pulisci()
+      if (!error) return { fatto: true, messaggio: 'Siete entrato.' }
+      const m = error.message
+      if (/verifier|challenge/i.test(m)) {
+        return { fatto: false, messaggio:
+          'Il collegamento è stato aperto in un browser diverso da quello che l’ha chiesto, ' +
+          'oppure i dati del sito sono stati cancellati nel frattempo. Chiedete il collegamento ' +
+          'e apritelo nel medesimo browser; se la posta lo apre in una finestra propria, ' +
+          'copiatelo e incollatelo qui. In alternativa, entrate con la parola d’ordine.' }
+      }
+      if (/expired|invalid|already/i.test(m)) {
+        return { fatto: false, messaggio:
+          'Il collegamento è scaduto o era già stato adoperato. Accade spesso quando il ' +
+          'servizio di posta lo apre da sé per esaminarlo, consumandolo prima di voi: ' +
+          'in quel caso conviene la parola d’ordine. Messaggio del server: ' + m }
+      }
+      return { fatto: false, messaggio: m }
+    },
+
+    /** Via che non dipende dalla posta né dal browser: parola d'ordine. */
+    async entraConParola(email: string, parola: string, nuova: boolean) {
+      const f = nuova
+        ? await sb.auth.signUp({ email, password: parola, options: { emailRedirectTo: doveTornare() } })
+        : await sb.auth.signInWithPassword({ email, password: parola })
+      if (f.error) throw new Error(f.error.message)
+      if (nuova && !f.data.session) {
+        throw new Error(
+          'Il conto è stato creato, ma il progetto esige la conferma per posta. ' +
+          'Confermate una volta, oppure spegnete «Confirm email» in Authentication → Sign In / Providers.')
+      }
+    },
+
     async entra(email: string) {
       const { error } = await sb.auth.signInWithOtp({
         email, options: { emailRedirectTo: doveTornare() },
