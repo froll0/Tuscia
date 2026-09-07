@@ -10,6 +10,9 @@ export type ConfigDeposito =
   | { sorta: 'locale' }
   | { sorta: 'supabase'; url: string; chiave: string }
 
+/** Esito di una singola verifica del collegamento. */
+export interface Esito { prova: string; bene: boolean; dettaglio: string }
+
 export interface Deposito {
   sorta: 'locale' | 'supabase'
   descrizione: string
@@ -22,6 +25,7 @@ export interface Deposito {
   esci?(): Promise<void>
   codiceDi?(id: string): Promise<string | null>
   entraConCodice?(codice: string): Promise<string>
+  verifica?(): Promise<Esito[]>
   ascolta?(id: string, quando: (c: Campagna) => void): () => void
 }
 
@@ -142,6 +146,31 @@ export async function creaDepositoSupabase(url: string, chiave: string): Promise
       if (error) throw new Error(error.message)
       return String(data)
     },
+    async verifica() {
+      const esiti: Esito[] = []
+      const { data: s } = await sb.auth.getSession()
+      esiti.push(s.session
+        ? { prova: 'Sessione', bene: true, dettaglio: `entrati come ${s.session.user.email ?? 'utente senza posta'}` }
+        : { prova: 'Sessione', bene: false, dettaglio: 'non siete entrato: fatevi mandare il collegamento per posta' })
+
+      const { error: eSel } = await sb.from(TAVOLA).select('id').limit(1)
+      if (!eSel) {
+        esiti.push({ prova: 'Tavola «campagne»', bene: true, dettaglio: 'esiste e si può leggere' })
+      } else if (/does not exist|schema cache|relation/i.test(eSel.message)) {
+        esiti.push({ prova: 'Tavola «campagne»', bene: false,
+          dettaglio: 'non esiste: eseguite il testo SQL qui sotto nel SQL Editor del progetto' })
+      } else {
+        esiti.push({ prova: 'Tavola «campagne»', bene: false, dettaglio: eSel.message })
+      }
+
+      const { error: eRpc } = await sb.rpc('entra_con_codice', { il_codice: '' })
+      const mancante = eRpc && /could not find|does not exist|schema cache/i.test(eRpc.message)
+      esiti.push(mancante
+        ? { prova: 'Invito per codice', bene: false, dettaglio: 'la funzione manca: rieseguite il testo SQL' }
+        : { prova: 'Invito per codice', bene: true, dettaglio: 'la funzione risponde' })
+
+      return esiti
+    },
     ascolta(id, quando) {
       const canale = sb.channel(`campagna:${id}`)
         .on('postgres_changes', { event: 'UPDATE', schema: 'public', table: TAVOLA, filter: `id=eq.${id}` },
@@ -168,10 +197,12 @@ export function scriviConfig(c: ConfigDeposito): void {
   try { localStorage.setItem(CHIAVE_CONFIG, JSON.stringify(c)) } catch { /* pazienza */ }
 }
 
+/**
+ * Apre il deposito scelto. Se il progetto Supabase non si apre, questa funzione
+ * GETTA: chi la chiama deve dirlo a chi gioca. Tornare in silenzio al deposito
+ * locale farebbe credere che i dati siano condivisi mentre non lo sono.
+ */
 export async function apriDeposito(c: ConfigDeposito): Promise<Deposito> {
-  if (c.sorta === 'supabase') {
-    try { return await creaDepositoSupabase(c.url, c.chiave) }
-    catch { return depositoLocale }
-  }
+  if (c.sorta === 'supabase') return creaDepositoSupabase(c.url, c.chiave)
   return depositoLocale
 }

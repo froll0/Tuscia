@@ -34,7 +34,21 @@ export function ProvvedeDati({ children }: { children: ReactNode }) {
   useEffect(() => {
     let annullato = false
     setCaricando(true)
-    apriDeposito(config).then(async (d) => {
+    void (async () => {
+      let d: Deposito
+      try {
+        d = await apriDeposito(config)
+      } catch (e) {
+        // Il progetto non si apre: si resta in locale, ma lo si dice.
+        if (annullato) return
+        setDeposito(depositoLocale)
+        setErrore(`Non si è potuto aprire il progetto Supabase: ${e instanceof Error ? e.message : String(e)}. `
+          + 'Si controllino URL e chiave. Intanto i dati restano in questo browser.')
+        setCampagne(await depositoLocale.elenca())
+        setUtente(null)
+        setCaricando(false)
+        return
+      }
       if (annullato) return
       setDeposito(d)
       try {
@@ -47,7 +61,7 @@ export function ProvvedeDati({ children }: { children: ReactNode }) {
       } finally {
         if (!annullato) setCaricando(false)
       }
-    })
+    })()
     return () => { annullato = true }
   }, [config])
 

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { usaDati } from '../dati/contesto'
 import { Campo, Foglio } from './comuni'
 import { SQL_SCHEMA } from '../dati/schema'
+import type { Esito } from '../dati/deposito'
 
 export default function Impostazioni() {
   const { config, mutaConfig, deposito, utente, ricarica, errore, campagne } = usaDati()
@@ -10,6 +11,8 @@ export default function Impostazioni() {
   const [email, setEmail] = useState('')
   const [avviso, setAvviso] = useState<string | null>(null)
   const [codice, setCodice] = useState('')
+  const [esiti, setEsiti] = useState<Esito[] | null>(null)
+  const [provando, setProvando] = useState(false)
 
   async function accedi() {
     if (!deposito.entra) return
@@ -57,10 +60,48 @@ export default function Impostazioni() {
             <input value={chiave} onChange={(e) => setChiave(e.target.value)} placeholder="eyJhbGci…" />
           </Campo>
         </div>
+        {url && !/^https?:\/\/.+/.test(url.trim()) && (
+          <div className="avviso">L&apos;URL dev&apos;essere intero, cominciando da <code>https://</code>.</div>
+        )}
+        {chiave && !chiave.trim().startsWith('ey') && (
+          <div className="avviso">La chiave <code>anon</code> comincia di regola con <code>ey</code>: controllate d&apos;aver copiato quella giusta, e non la <code>service_role</code>, che non va mai messa in un sito.</div>
+        )}
         <div className="riga" style={{ marginTop: '.8rem' }}>
-          <button type="button" className="primario" disabled={!url || !chiave}
-                  onClick={() => mutaConfig({ sorta: 'supabase', url, chiave })}>Adoperare questo progetto</button>
+          <button type="button" className="primario"
+                  disabled={!url.trim() || !chiave.trim() || !/^https?:\/\/.+/.test(url.trim())}
+                  onClick={() => { setEsiti(null); mutaConfig({ sorta: 'supabase', url: url.trim(), chiave: chiave.trim() }) }}>
+            Adoperare questo progetto
+          </button>
+          {deposito.sorta === 'supabase' && (
+            <button type="button" disabled={provando} onClick={() => {
+              void (async () => {
+                setProvando(true)
+                try { setEsiti(await deposito.verifica?.() ?? null) }
+                catch (e) { setEsiti([{ prova: 'Collegamento', bene: false,
+                  dettaglio: e instanceof Error ? e.message : String(e) }]) }
+                finally { setProvando(false) }
+              })()
+            }}>{provando ? 'Si prova…' : 'Provare il collegamento'}</button>
+          )}
         </div>
+
+        {esiti && (
+          <div className="tabella" style={{ marginTop: '1rem' }}>
+            <table>
+              <tbody>
+                {esiti.map((e) => (
+                  <tr key={e.prova}>
+                    <td style={{ width: '1.6rem', color: e.bene ? 'var(--verde)' : 'var(--rubrica)' }}>
+                      {e.bene ? '✓' : '✗'}
+                    </td>
+                    <td><strong>{e.prova}</strong></td>
+                    <td>{e.dettaglio}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
 
         {deposito.sorta === 'supabase' && (
           <div style={{ marginTop: '1.2rem' }}>
