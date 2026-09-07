@@ -153,6 +153,21 @@ vent'anni.
 le migliorie; poi si applica la Fedeltà; poi il raccolto; da ultimo il guasto,
 se vi è stato.
 
+### Quando entra la rendita
+
+Non tutte le rendite entrano nel medesimo momento, e la differenza pesa sui
+conti di cassa.
+
+| Sorta di bene | Quando entra | Soggetta al raccolto |
+|---|---|---|
+| Poderi, ville, castelli, terre murate, città, pievi, mulini, greggi | Tutta in **autunno** | **Sì** |
+| Case da pigione, botteghe date a fitto, fondachi, appalti di gabella | Un **quarto per stagione** | No |
+
+Ne segue che una casa il cui patrimonio sia tutto in terre vive undici mesi
+l'anno di credito, e chi possiede case e botteghe in città ha invece contante
+in ogni stagione. È una delle ragioni per cui i mercanti toscani, arricchiti,
+compravano poderi ma non vendevano le botteghe.
+
 ## 6. Le Migliorie
 
 Si costruiscono con l'azione *Migliorare una terra*. Il tempo indicato è il

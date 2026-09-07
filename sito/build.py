@@ -8,7 +8,9 @@ from md import convert, inline
 import schede as SCH
 
 ROOT = QUI.parent
-USCITA = pathlib.Path(sys.argv[1]) if len(sys.argv) > 1 else QUI / "tuscia.html"
+ARGOMENTI = [a for a in sys.argv[1:] if not a.startswith("--")]
+PAGINA_INTERA = "--intera" in sys.argv
+USCITA = pathlib.Path(ARGOMENTI[0]) if ARGOMENTI else QUI / "tuscia.html"
 
 ROMANI = ["", "I","II","III","IV","V","VI","VII","VIII","IX","X",
           "XI","XII","XIII","XIV","XV","XVI","XVII","XVIII"]
@@ -727,6 +729,18 @@ pagina = (TESTA + TESTATA + '<div class="guscio">' + INDICE
           + corpo_fasc + corpo_sched + corpo_tav + PIEDE + '</main></div>'
           + '<button class="su" id="su" type="button">In cima</button>' + SCRIPT)
 
+def intera(corpo: str, titolo: str) -> str:
+    return ('<!doctype html>\n<html lang="it">\n<head>\n<meta charset="utf-8">\n'
+            '<meta name="viewport" content="width=device-width, initial-scale=1">\n'
+            '<meta name="description" content="%s">\n'
+            '<style>html{color-scheme:light dark}body{margin:0}img{max-width:100%%}'
+            '[hidden]{display:none!important}</style>\n'
+            '</head>\n<body>\n%s\n</body>\n</html>\n') % (titolo, corpo)
+
+if PAGINA_INTERA:
+    pagina = intera(pagina, "Manuale integrale del gioco di ruolo gestionale nella Toscana rinascimentale.")
+
+USCITA.parent.mkdir(parents=True, exist_ok=True)
 USCITA.write_text(pagina, encoding="utf-8")
 
 # le schede si serbano anche come foglio a sé, stampabile senza la pagina intera

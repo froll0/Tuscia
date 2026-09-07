@@ -160,7 +160,8 @@ bilancio stagionale sulla scheda**, e l'Arbitro lo verifichi.
 
 | Voce | Quando entra |
 |---|---|
-| **Rendita delle terre** | Interamente in **Autunno**, dopo il raccolto (fasc. 07) |
+| **Rendita delle terre e dei castelli** | Interamente in **Autunno**, dopo il raccolto (fasc. 07) |
+| **Pigioni di case e botteghe, fondachi, appalti di gabella** | Un quarto per stagione: non dipendono dall'annata |
 | **Utile dei traffici e delle botteghe** | Un quarto per stagione (fasc. 08) |
 | **Interessi e paghe del Monte** | Un quarto per stagione |
 | **Salari degli uffici** | Alla scadenza dell'ufficio |

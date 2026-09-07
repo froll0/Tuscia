@@ -1,0 +1,60 @@
+name: Pubblicare su GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  costruire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: app/package-lock.json
+
+      - name: Installare
+        working-directory: app
+        run: npm ci
+
+      - name: Provare il motore delle regole
+        working-directory: app
+        run: npm test
+
+      - name: Costruire il programma
+        working-directory: app
+        run: npm run build
+
+      - name: Comporre il manuale e le schede
+        run: |
+          python3 sito/build.py app/dist/manuale/index.html --intera
+          mkdir -p app/dist/schede
+          cp schede/schede-da-stampare.html app/dist/schede/index.html
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: app/dist
+
+  pubblicare:
+    needs: costruire
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.pubblica.outputs.page_url }}
+    steps:
+      - id: pubblica
+        uses: actions/deploy-pages@v4

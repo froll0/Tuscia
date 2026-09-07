@@ -48,7 +48,7 @@ d'industria del casato.
 
 | Radice | Dote gratuita |
 |---|---|
-| **Lana** | Bottega d'Arte della Lana (rendita 120 fl/anno, vedi fasc. 08); +1 alle prove di Manifattura; voce nell'Arte |
+| **Lana** | Bottega d'Arte della Lana (rendita 150 fl/anno, vedi fasc. 08); +1 alle prove di Manifattura; voce nell'Arte |
 | **Seta** | Bottega di Por Santa Maria (rendita 150 fl/anno, più volatile); +1 a Mercatura |
 | **Cambio** | Banco di piccolo giro (fondo 800 fl); +1 a Computo; conoscenza delle piazze |
 | **Terre** | Due Terre in più a scelta fra quelle da 60 fl; +1 ad Agricoltura; Fedeltà iniziale +1 su tutte le Terre |

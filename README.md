@@ -69,6 +69,32 @@ fascicolo 01 (che contiene il lessico e le convenzioni di scrittura), il 05 e il
 
 ---
 
+## Il programma di governo
+
+Oltre al manuale, il repository contiene un'**applicazione web** per condurre
+una campagna: [`app/`](app/). Apertura della campagna per l'Arbitro, creazione
+dei casati coi Punti di Casa contati in tempo reale, creazione di congiunti e
+faccendieri, schede vive che calcolano bilanci e rendite passo per passo, corso
+dell'anno per fasi e stagioni, tiro del raccolto, giornale della campagna e
+computo della Preminenza.
+
+È un sito statico da pubblicare su GitHub Pages. I dati stanno in questo browser
+oppure — per giocare in più persone, anche fra una seduta e l'altra — in un
+progetto Supabase gratuito che il tavolo apre per sé. Nessuna chiave entra nel
+repository.
+
+Il **motore delle regole** (`app/src/regole/`) è codice puro, provato contro gli
+esempi svolti del manuale: se una regola cambia nel testo e non nel codice, una
+prova fallisce.
+
+```
+cd app && npm install && npm run dev
+```
+
+Si veda [`app/README.md`](app/README.md) per il resto.
+
+---
+
 ## Occorrente
 
 - Due dadi a sei facce per partecipante (e alcuni di riserva);

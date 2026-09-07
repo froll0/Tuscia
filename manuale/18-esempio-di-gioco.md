@@ -19,6 +19,13 @@ si incrociano.
 Popolani grassi, lanaioli, in città da centoventi anni. Onore 5, Sospetto 1,
 Magnificenza 1, Seguito 3 in Firenze, Armi grado 1.
 
+*Si avverta che questa non è la casa quale uscì dalla creazione, ma quale si
+trova nel 1467, dopo due anni di gioco: il patrimonio è cresciuto, e con esso
+qualche podere. Un casato appena creato dispone di ventiquattro Punti di Casa
+(fasc. 03 § 4), che per i Bencivenni si spesero così: Patrimonio grado 2 sei
+punti, terre quattro, Seguito 3 sei, Onore 5 tre, Armi 1 tre, Magnificenza 1
+due: ventiquattro esatti.*
+
 **Patrimonio**: 1.900 fiorini. **Tenore di casa**: Onorevole (150 fl l'anno).
 
 | Sostanza | Rendita annua |
