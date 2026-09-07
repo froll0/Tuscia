@@ -120,6 +120,27 @@ export default function Impostazioni() {
                 </div>
               )}
             {avviso && <div className="avviso lieto">{avviso}</div>}
+            {!utente && deposito.indirizzoDiRitorno && (
+              <div className="avviso">
+                <strong>Perché il collegamento funzioni</strong>, nel progetto Supabase si vada in{' '}
+                <em>Authentication → URL Configuration</em> e si aggiunga questo indirizzo fra i{' '}
+                <em>Redirect URLs</em>:
+                <div className="riga" style={{ marginTop: '.5rem' }}>
+                  <code style={{ fontFamily: 'var(--apparato)', border: '1px solid var(--bordo)',
+                                 padding: '.3rem .5rem', background: 'var(--carta)', wordBreak: 'break-all' }}>
+                    {deposito.indirizzoDiRitorno}
+                  </code>
+                  <button type="button" className="minuto"
+                          onClick={() => void navigator.clipboard?.writeText(deposito.indirizzoDiRitorno!)}>
+                    Copiare
+                  </button>
+                </div>
+                <p className="minuto" style={{ margin: '.5rem 0 0' }}>
+                  Senza questa autorizzazione il collegamento arriva ma non vi fa entrare, e la
+                  riga «Sessione» resterà rossa.
+                </p>
+              </div>
+            )}
           </div>
         )}
       </Foglio>

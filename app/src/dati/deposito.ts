@@ -26,6 +26,8 @@ export interface Deposito {
   codiceDi?(id: string): Promise<string | null>
   entraConCodice?(codice: string): Promise<string>
   verifica?(): Promise<Esito[]>
+  indirizzoDiRitorno?: string
+  ascoltaAccesso?(quando: (utente: string | null) => void): () => void
   ascolta?(id: string, quando: (c: Campagna) => void): () => void
 }
 
@@ -77,7 +79,22 @@ const TAVOLA = 'campagne'
 
 export async function creaDepositoSupabase(url: string, chiave: string): Promise<Deposito> {
   const { createClient } = await import('@supabase/supabase-js')
-  const sb = createClient(url, chiave, { auth: { persistSession: true, autoRefreshToken: true } })
+  // Il programma adopera un router a cancelletto, e il flusso implicito di
+  // Supabase restituisce i gettoni proprio nel cancelletto: i due si
+  // contenderebbero lo stesso pezzo di URL e la sessione non si stabilirebbe
+  // mai. Col flusso PKCE il gettone torna come parametro di ricerca, che al
+  // router non interessa.
+  const sb = createClient(url, chiave, {
+    auth: {
+      persistSession: true,
+      autoRefreshToken: true,
+      detectSessionInUrl: true,
+      flowType: 'pkce',
+    },
+  })
+
+  /** L'indirizzo di ritorno dev'essere senza cancelletto e senza parametri. */
+  const doveTornare = () => `${window.location.origin}${window.location.pathname}`
 
   const daRiga = (r: { dati: Campagna }) => r.dati
 
@@ -90,9 +107,16 @@ export async function creaDepositoSupabase(url: string, chiave: string): Promise
     },
     async entra(email: string) {
       const { error } = await sb.auth.signInWithOtp({
-        email, options: { emailRedirectTo: window.location.href },
+        email, options: { emailRedirectTo: doveTornare() },
       })
       if (error) throw new Error(error.message)
+    },
+    indirizzoDiRitorno: doveTornare(),
+    ascoltaAccesso(quando) {
+      const { data } = sb.auth.onAuthStateChange((_evento, sessione) => {
+        quando(sessione?.user.email ?? null)
+      })
+      return () => data.subscription.unsubscribe()
     },
     async esci() { await sb.auth.signOut() },
     async elenca() {
@@ -155,7 +179,10 @@ export async function creaDepositoSupabase(url: string, chiave: string): Promise
 
       const { error: eSel } = await sb.from(TAVOLA).select('id').limit(1)
       if (!eSel) {
-        esiti.push({ prova: 'Tavola «campagne»', bene: true, dettaglio: 'esiste e si può leggere' })
+        esiti.push({ prova: 'Tavola «campagne»', bene: true,
+          dettaglio: s.session
+            ? 'esiste e si può leggere'
+            : 'esiste, ma senza sessione la regola per riga nasconde ogni riga' })
       } else if (/does not exist|schema cache|relation/i.test(eSel.message)) {
         esiti.push({ prova: 'Tavola «campagne»', bene: false,
           dettaglio: 'non esiste: eseguite il testo SQL qui sotto nel SQL Editor del progetto' })
@@ -163,11 +190,11 @@ export async function creaDepositoSupabase(url: string, chiave: string): Promise
         esiti.push({ prova: 'Tavola «campagne»', bene: false, dettaglio: eSel.message })
       }
 
-      const { error: eRpc } = await sb.rpc('entra_con_codice', { il_codice: '' })
-      const mancante = eRpc && /could not find|does not exist|schema cache/i.test(eRpc.message)
-      esiti.push(mancante
-        ? { prova: 'Invito per codice', bene: false, dettaglio: 'la funzione manca: rieseguite il testo SQL' }
-        : { prova: 'Invito per codice', bene: true, dettaglio: 'la funzione risponde' })
+      const { error: eCod } = await sb.from(TAVOLA).select('codice').limit(1)
+      esiti.push(eCod
+        ? { prova: 'Testo SQL aggiornato', bene: false,
+            dettaglio: 'manca la colonna «codice»: rieseguite il testo SQL qui sotto' }
+        : { prova: 'Testo SQL aggiornato', bene: true, dettaglio: 'la colonna «codice» c’è' })
 
       return esiti
     },

@@ -65,6 +65,17 @@ export function ProvvedeDati({ children }: { children: ReactNode }) {
     return () => { annullato = true }
   }, [config])
 
+  // Tornando dal collegamento ricevuto per posta, la sessione si stabilisce
+  // qualche istante dopo il caricamento: si sta in ascolto e si riprende tutto.
+  useEffect(() => {
+    if (!deposito.ascoltaAccesso) return
+    return deposito.ascoltaAccesso((chi) => {
+      setUtente(chi)
+      void deposito.elenca().then(setCampagne).catch(() => { /* gia' segnalato */ })
+      if (chi) setErrore(null)
+    })
+  }, [deposito])
+
   const ricarica = useCallback(async () => {
     try {
       setCampagne(await deposito.elenca())

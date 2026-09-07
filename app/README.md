@@ -45,11 +45,24 @@ Nessun numero è scritto altrove che in `tavole.ts`.
 nulla, funziona anche senza rete, ma non c'è stato condiviso: l'Arbitro tiene
 l'unica copia buona.
 
-**Supabase** (per giocare in più persone). Si apre un progetto gratuito, si
-esegue una volta il testo SQL che il programma mostra nella pagina *Deposito*,
-e si incollano URL e chiave pubblica. Da quel momento le campagne stanno sul
-server, si accede con un collegamento mandato per posta, e le modifiche si
-propagano in tempo reale.
+**Supabase** (per giocare in più persone). Occorrono tre cose, e la terza si
+dimentica sempre:
+
+1. aprire un progetto gratuito ed eseguire una volta, nel *SQL Editor*, il testo
+   che il programma mostra nella pagina *Deposito*;
+2. incollare nella medesima pagina l'URL del progetto e la chiave `anon`;
+3. in *Authentication → URL Configuration*, aggiungere fra i **Redirect URLs**
+   l'indirizzo che il programma mostra sotto il riquadro dell'accesso — di
+   regola `https://<utente>.github.io/Tuscia/` e, per lo sviluppo,
+   `http://localhost:5173/`.
+
+Senza il terzo passo il collegamento arriva per posta ma non fa entrare, e ogni
+scrittura viene respinta dalla regola per riga.
+
+L'accesso adopera il **flusso PKCE**, non quello implicito: il programma ha un
+router a cancelletto, e il flusso implicito restituirebbe i gettoni proprio nel
+cancelletto, contendendoselo col router. Col PKCE il gettone torna come
+parametro di ricerca e i due non si toccano.
 
 La chiave pubblica (`anon`) è pubblica per disegno: a proteggere le righe è la
 *row level security*, che il testo SQL configura. Le chiavi restano in questo
