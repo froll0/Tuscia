@@ -9,6 +9,7 @@ export default function Impostazioni() {
   const [chiave, setChiave] = useState(config.sorta === 'supabase' ? config.chiave : '')
   const [email, setEmail] = useState('')
   const [avviso, setAvviso] = useState<string | null>(null)
+  const [codice, setCodice] = useState('')
 
   async function accedi() {
     if (!deposito.entra) return
@@ -81,6 +82,28 @@ export default function Impostazioni() {
           </div>
         )}
       </Foglio>
+
+      {deposito.sorta === 'supabase' && utente && (
+        <Foglio titolo="Sedersi a un tavolo altrui">
+          <p className="glossa">
+            L&apos;Arbitro trova il codice d&apos;invito in capo alla pagina della sua campagna.
+          </p>
+          <div className="riga" style={{ marginTop: '.7rem' }}>
+            <input value={codice} onChange={(e) => setCodice(e.target.value)}
+                   placeholder="a1b2c3d4" style={{ maxWidth: '14rem' }} />
+            <button type="button" disabled={!codice.trim()} onClick={() => {
+              void (async () => {
+                try {
+                  await deposito.entraConCodice?.(codice)
+                  await ricarica()
+                  setAvviso('Siete entrato nella campagna: la troverete nell’elenco.')
+                  setCodice('')
+                } catch (e) { setAvviso(e instanceof Error ? e.message : String(e)) }
+              })()
+            }}>Entrare con questo codice</button>
+          </div>
+        </Foglio>
+      )}
 
       <Foglio titolo="Le tavole da creare nel progetto">
         <p className="glossa">

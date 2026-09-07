@@ -21,8 +21,13 @@ export default function NuovaCampagna() {
     if (!nome.trim()) return
     setLavoro(true)
     const c = campagnaNuova(nome.trim(), epoca, citta, arbitro.trim() || 'Arbitro')
-    await salva(c)
-    vaiA(`/c/${c.id}`)
+    try {
+      await salva(c)
+      vaiA(`/c/${c.id}`)
+    } catch {
+      // Il guasto è già scritto in capo alla pagina dal contesto.
+      setLavoro(false)
+    }
   }
 
   return (

@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { usaCampagna, usaMutaCampagna } from '../dati/contesto'
+import { usaCampagna, usaDati, usaMutaCampagna } from '../dati/contesto'
 import { Campo, Dado, Foglio, Misura, Vuoto, fiorini } from './comuni'
 import { EPOCHE, RACCOLTO, REGIONI, CONTRASTI } from '../regole/tavole'
 import { azioniDisponibili, uominiIdonei } from '../regole/bilancio'
@@ -26,6 +26,16 @@ export default function Cruscotto() {
   const [prova, setProva] = useState<ReturnType<typeof valutaProva> | null>(null)
   const [bonus, setBonus] = useState(5)
   const [contrasto, setContrasto] = useState(10)
+  const { deposito } = usaDati()
+  const [codice, setCodice] = useState<string | null>(null)
+
+  useEffect(() => {
+    let vivo = true
+    if (id && deposito.codiceDi) {
+      void deposito.codiceDi(id).then((c) => { if (vivo) setCodice(c) })
+    } else setCodice(null)
+    return () => { vivo = false }
+  }, [id, deposito])
 
   if (!campagna) return <Vuoto>Campagna non trovata in questo deposito.</Vuoto>
 
@@ -81,6 +91,23 @@ export default function Cruscotto() {
           <button className="primario" type="button">Nuovo casato</button>
         </Link>
       </div>
+
+      {codice && (
+        <Foglio titolo="Il codice d'invito">
+          <p className="glossa">
+            Chi vuole sedersi a questo tavolo apra il programma, entri nel medesimo progetto
+            Supabase, e adoperi questo codice nella pagina Deposito.
+          </p>
+          <div className="riga" style={{ marginTop: '.6rem' }}>
+            <code style={{ fontFamily: 'var(--apparato)', fontSize: '1.3rem', letterSpacing: '.2em',
+                           border: '1px solid var(--bordo)', padding: '.4rem .8rem',
+                           background: 'var(--carta-2)' }}>{codice}</code>
+            <button type="button" onClick={() => void navigator.clipboard?.writeText(codice)}>
+              Copiare
+            </button>
+          </div>
+        </Foglio>
+      )}
 
       <Foglio titolo="Il corso dell'anno">
         <div className="griglia g3" style={{ marginBottom: '1rem' }}>

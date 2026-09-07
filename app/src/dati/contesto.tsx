@@ -15,6 +15,7 @@ interface Contesto {
   salva: (c: Campagna) => Promise<void>
   cancella: (id: string) => Promise<void>
   utente: string | null
+  scordaErrore: () => void
 }
 
 const Ctx = createContext<Contesto | null>(null)
@@ -60,7 +61,13 @@ export function ProvvedeDati({ children }: { children: ReactNode }) {
 
   const salva = useCallback(async (c: Campagna) => {
     const aggiornata: Campagna = { ...c, aggiornataIl: new Date().toISOString(), versione: c.versione + 1 }
-    await deposito.scrivi(aggiornata)
+    try {
+      await deposito.scrivi(aggiornata)
+    } catch (e) {
+      setErrore(e instanceof Error ? e.message : String(e))
+      throw e
+    }
+    setErrore(null)
     setCampagne((v) => {
       const i = v.findIndex((x) => x.id === aggiornata.id)
       return i < 0 ? [aggiornata, ...v] : v.map((x) => (x.id === aggiornata.id ? aggiornata : x))
@@ -68,15 +75,24 @@ export function ProvvedeDati({ children }: { children: ReactNode }) {
   }, [deposito])
 
   const cancella = useCallback(async (id: string) => {
-    await deposito.cancella(id)
+    try {
+      await deposito.cancella(id)
+    } catch (e) {
+      setErrore(e instanceof Error ? e.message : String(e))
+      throw e
+    }
     setCampagne((v) => v.filter((c) => c.id !== id))
   }, [deposito])
+
+  const scordaErrore = useCallback(() => setErrore(null), [])
 
   const mutaConfig = useCallback((c: ConfigDeposito) => { scriviConfig(c); setConfig(c) }, [])
 
   const valore = useMemo<Contesto>(() => ({
     deposito, config, mutaConfig, campagne, caricando, errore, ricarica, salva, cancella, utente,
-  }), [deposito, config, mutaConfig, campagne, caricando, errore, ricarica, salva, cancella, utente])
+    scordaErrore,
+  }), [deposito, config, mutaConfig, campagne, caricando, errore, ricarica, salva, cancella, utente,
+       scordaErrore])
 
   return <Ctx.Provider value={valore}>{children}</Ctx.Provider>
 }
@@ -92,12 +108,16 @@ export function usaCampagna(id: string | undefined): Campagna | null {
   return useMemo(() => campagne.find((c) => c.id === id) ?? null, [campagne, id])
 }
 
-/** Muta la campagna e la salva nel deposito. */
+/**
+ * Muta la campagna e la salva nel deposito.
+ * Non rigetta mai: l'errore è già registrato nel contesto e appare in capo alla
+ * pagina, sicché chiamarla con `void` resta sicuro.
+ */
 export function usaMutaCampagna(id: string | undefined) {
   const { campagne, salva } = usaDati()
   return useCallback(async (opera: (c: Campagna) => Campagna) => {
     const c = campagne.find((x) => x.id === id)
     if (!c) return
-    await salva(opera(c))
+    try { await salva(opera(c)) } catch { /* registrato nel contesto */ }
   }, [campagne, id, salva])
 }

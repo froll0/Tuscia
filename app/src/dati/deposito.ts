@@ -20,6 +20,8 @@ export interface Deposito {
   utente?(): Promise<string | null>
   entra?(email: string): Promise<void>
   esci?(): Promise<void>
+  codiceDi?(id: string): Promise<string | null>
+  entraConCodice?(codice: string): Promise<string>
   ascolta?(id: string, quando: (c: Campagna) => void): () => void
 }
 
@@ -100,16 +102,45 @@ export async function creaDepositoSupabase(url: string, chiave: string): Promise
       return data ? daRiga(data as never) : null
     },
     async scrivi(c) {
-      const { data: u } = await sb.auth.getUser()
+      // Senza sessione la riga non ha proprietario, e la regola per riga la
+      // rifiuta con un messaggio oscuro. Meglio dirlo qui, e in italiano.
+      const { data: s } = await sb.auth.getSession()
+      if (!s.session) {
+        throw new Error(
+          'Non siete entrato nel progetto Supabase: nulla si può scrivere. ' +
+          'Andate alla pagina Deposito e fatevi mandare il collegamento per posta.')
+      }
+      // Il proprietario non si manda mai dal programma: alla prima scrittura lo
+      // pone la base di dati (default auth.uid()), e in seguito non si muta.
       const { error } = await sb.from(TAVOLA).upsert({
         id: c.id, nome: c.nome, dati: c, aggiornata_il: new Date().toISOString(),
-        proprietario: u.user?.id ?? null,
       })
-      if (error) throw new Error(error.message)
+      if (error) {
+        if (/row-level security/i.test(error.message)) {
+          throw new Error(
+            'Il progetto Supabase ha rifiutato la scrittura. Di regola significa che le ' +
+            'tavole sono state create con una versione precedente del testo SQL: si ' +
+            'riesegua quello che la pagina Deposito mostra ora. Messaggio del server: ' +
+            error.message)
+        }
+        throw new Error(error.message)
+      }
     },
     async cancella(id) {
       const { error } = await sb.from(TAVOLA).delete().eq('id', id)
       if (error) throw new Error(error.message)
+    },
+    async codiceDi(id) {
+      const { data, error } = await sb.from(TAVOLA).select('codice').eq('id', id).maybeSingle()
+      if (error) return null
+      return (data as { codice?: string } | null)?.codice ?? null
+    },
+    async entraConCodice(codice) {
+      const { data: s } = await sb.auth.getSession()
+      if (!s.session) throw new Error('Entrate prima nel progetto, poi adoperate il codice.')
+      const { data, error } = await sb.rpc('entra_con_codice', { il_codice: codice.trim() })
+      if (error) throw new Error(error.message)
+      return String(data)
     },
     ascolta(id, quando) {
       const canale = sb.channel(`campagna:${id}`)

@@ -7,6 +7,7 @@ import NuovoCasato from './interfaccia/NuovoCasato'
 import SchedaCasato from './interfaccia/SchedaCasato'
 import NuovoPersonaggio from './interfaccia/NuovoPersonaggio'
 import Impostazioni from './interfaccia/Impostazioni'
+import Avvisi from './interfaccia/Avvisi'
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
         </header>
 
         <main className="corpo">
+          <Avvisi />
           <Routes>
             <Route path="/" element={<Elenco />} />
             <Route path="/nuova" element={<NuovaCampagna />} />
